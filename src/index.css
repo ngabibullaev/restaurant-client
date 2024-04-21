@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Roboto', sans-serif !important;
+  background-color: #f1f1f1 !important;
+}
+
+.accordion-body {
+  padding: 0 !important;
+}
+.open-menu>button.collapsed {
+  background-color: orange !important;
+  border: none !important;
+  border-bottom-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border: 1px solid #c4c4c4 !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.open-menu>button {
+  background-color: orange !important;
+  border: none !important;
+  border-top-right-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+  border: 1px solid rgb(196, 196, 196) !important;
+  border-bottom: 1px solid rgba(4, 250, 24, 0) !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.open-menu>button {
+  color: black !important;
+  font-weight: 500;
+  font-size: 20px !important;
+}
+
+
+
+.open-otziv>button.collapsed {
+  background-color: white !important;
+  border: none !important;
+  border-bottom-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border: 1px solid rgb(196, 196, 196) !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.open-otziv>button {
+  background-color: white !important;
+  border: none !important;
+  border-top-right-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+  border: 1px solid rgb(196, 196, 196) !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.open-otziv>button {
+  color: black !important;
+  font-weight: 500;
+  font-size: 20px !important;
+}
+
+.otziv-main {
+  background-color: #f1f1f1 !important;
+}
+
+.slider-img {
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+  animation: liftAndSlide 2s infinite alternate linear; /* Добавим анимацию */
+  filter: brightness(40%); /* Добавим эффект темноты */
+}
+
+/* @keyframes liftAndSlide {
+  0% {
+      transform: scale(1) rotate(-1deg); 
+  }
+  50% {
+      transform: scale(1.1) rotate(0deg); 
+  }
+  100% {
+      transform: scale(1) rotate(1deg); 
+  }
+} */
+
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

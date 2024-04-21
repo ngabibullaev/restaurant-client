@@ -1,0 +1,35 @@
+.rows-twopizzas {
+    background-color: rgb(255, 255, 255);
+    margin-top: 10px;
+    border: 1px solid rgb(199, 199, 199);
+}
+
+.img-left {
+    overflow: hidden;
+    width: 10em;
+}
+
+.img-right {
+    overflow: hidden;
+    width: 10em;
+    transform: scaleX(-1);
+}
+
+.twopizzas-img-left {
+    width: 20em;
+}
+
+.twopizzas-img-right {
+    width: 20em;
+}
+
+.pizza-image {
+    width: 300px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: none !important;
+}
+
+.pizza-image:active {
+    transform: scale(0.9);
+}

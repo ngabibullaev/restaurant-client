@@ -1,0 +1,138 @@
+.nav-radius {
+    border-radius: 0 !important;
+    font-size: 20px !important;
+    background: #f1f1f1 !important;
+    color: black !important;
+    padding: 0 20px !important;
+    border: 1px solid rgb(196, 196, 196) !important;
+}
+
+.nav-radius-active {
+    border-radius: 0 !important;
+    font-size: 20px !important;
+    color: rgb(255, 255, 255) !important;
+    background: #343a40 !important;
+    padding: 0 20px !important;
+    border: 1px solid rgb(196, 196, 196) !important;
+}
+
+
+
+.Form {
+    display: flex;
+    background: #424649;
+}
+
+.navigation {
+    overflow-x: scroll;
+    border-radius: 0 !important;
+}
+
+.navigation::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+
+.fform {
+    --width-of-input: 200px;
+    --border-height: 1px;
+    --border-before-color: rgba(221, 221, 221, 0.39);
+    --border-after-color: orange;
+    --input-hovered-color: #eeeeee;
+    position: relative;
+    width: 100%;
+   }
+   /* styling of Input */
+   .finput {
+    color: #000000;
+    background: #f1f1f1;
+    font-size: 0.9rem;
+    width: 100%;
+    box-sizing: border-box;
+    padding-inline: 0.5em;
+    padding-block: 0.7em;
+    border: none;
+    border-bottom: var(--border-height) solid var(--border-before-color);
+    /* Hover on Input */
+    &:hover {
+     background: var(--input-hovered-color);
+    }
+    
+    &:focus {
+     outline: none;
+    }
+   }
+   /* styling of animated border */
+   .finput-border {
+    position: absolute;
+    background: var(--border-after-color);
+    width: 0%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    transition: 0.3s;
+   }
+   /* here is code of animated border */
+   .finput:focus ~ .finput-border {
+    width: 100%;
+   }
+
+   .nav-link {
+    color: orange !important;
+    font-size: 18px !important;
+   }
+
+   .dropdown-menu.show {
+    background-color: rgba(0, 0, 0, 0.74) !important;
+   }
+
+   .dropdown-item {
+    color: white !important;
+   }
+
+   .dropdown-item:hover {
+    background: rgba(255, 154, 2, 0.452) !important;
+   }
+
+   .dropdown-toggle::after {
+    display: none !important;
+   }
+
+   .dropdown-item.active {
+    background: orange !important;
+   }
+   
+   .dropdown-item:active {
+    background: rgba(255, 154, 2, 0.452) !important;
+   }
+
+   .fsearch, .fclose {
+    position: absolute;
+    margin-left: -40px;
+    margin-top: 7px;
+   }
+
+   .fclose:hover {
+    cursor: pointer;
+    fill: rgb(56, 56, 56);
+   }
+
+   .line {
+    color: white;
+   }
+
+   .returnAsc {
+    color: orange;
+    cursor: pointer;
+    text-align: center;
+    user-select: none;
+   }
+
+   .returnDesc {
+    color: orangered;
+    cursor: pointer;
+    text-align: center;
+    user-select: none;
+   }

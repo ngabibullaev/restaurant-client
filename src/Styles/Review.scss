@@ -1,0 +1,21 @@
+.reviewRest {
+    font-size: 40px;
+    margin: 0 4px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.reviewRest:active {
+    transform: scale(0.9);
+}
+
+.otziv-area {
+    height: 100px !important;
+    margin-top: 10px !important;
+
+    &:focus {
+        outline: none !important;
+        box-shadow: none !important;
+        border-color: transparent !important;
+    }
+}
