@@ -53,10 +53,10 @@
 
 ```bash
 # Клонируйте репозиторий
-git clone https://github.com/ngabibullaev/coderix.git
+git clone https://github.com/ngabibullaev/restaurant-client.git
 
 # Перейдите в папку проекта
-cd coderix
+cd restaurant-client
 
 # Установите зависимости
 npm install
