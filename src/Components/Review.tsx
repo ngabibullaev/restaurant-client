@@ -1,167 +1,187 @@
 import axios from "axios";
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { Alert, Button, Container } from "react-bootstrap";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import moment from "moment";
 
 type ReviewItem = {
-    name: string;
-    ratingIndex: number;
-    date: Date;
-}
+  name: string;
+  ratingIndex: number;
+  date: Date;
+};
 
 const PAGE_SIZE = 10;
 
 export const Review: React.FC = () => {
-    const rating: string[] = ["★", "★", "★", "★", "★"];
+  const rating: string[] = ["★", "★", "★", "★", "★"];
 
-    const [ratingIndex, setRatingIndex] = useState<number>(-1);
-    const [reviews, setReviews] = useState<ReviewItem[]>([]);
-    const [name, setName] = useState<string>("");
-    const [page, setPage] = useState(0);
-    const [hasMore, setHasMore] = useState(true);
-    const loader = useRef<HTMLDivElement | null>(null);
+  const [ratingIndex, setRatingIndex] = useState<number>(-1);
+  const [reviews, setReviews] = useState<ReviewItem[]>([]);
+  const [name, setName] = useState<string>("");
+  const [page, setPage] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const loader = useRef<HTMLDivElement | null>(null);
 
-    // Оборачиваем loadMore в useCallback
-    const loadMore = useCallback(async () => {
-        if (hasMore) {
-            const response = await axios.get(`https://restaurant-server-ohyq.onrender.com/setting?_page=${page}&_limit=${PAGE_SIZE}`);
-            const newReviews = response.data;
-            setReviews(prev => [...prev, ...newReviews]);
-            setPage(prev => prev + 1);
-            if (newReviews.length < PAGE_SIZE) {
-                setHasMore(false);
-            }
-        }
-    }, [hasMore, page]);
+  // Оборачиваем loadMore в useCallback
+  const loadMore = useCallback(async () => {
+    if (hasMore) {
+      const response = await axios.get(
+        `https://restaurant-server-ohyq.onrender.com/setting?_page=${page}&_limit=${PAGE_SIZE}`,
+      );
+      const newReviews = response.data;
+      setReviews((prev) => [...prev, ...newReviews]);
+      setPage((prev) => prev + 1);
+      if (newReviews.length < PAGE_SIZE) {
+        setHasMore(false);
+      }
+    }
+  }, [hasMore, page]);
 
-    // Оборачиваем handleObserver в useCallback
-    const handleObserver = useCallback((entities: IntersectionObserverEntry[]) => {
-        const target = entities[0];
-        if (target.isIntersecting && hasMore) {
-            loadMore();
-        }
-    }, [hasMore, loadMore]);
-
-    // Добавляем loadMore в зависимости
-    useEffect(() => {
+  // Оборачиваем handleObserver в useCallback
+  const handleObserver = useCallback(
+    (entities: IntersectionObserverEntry[]) => {
+      const target = entities[0];
+      if (target.isIntersecting && hasMore) {
         loadMore();
-    }, [loadMore]);
+      }
+    },
+    [hasMore, loadMore],
+  );
 
-    // Добавляем handleObserver в зависимости и очищаем observer
-    useEffect(() => {
-        const options = {
-            root: null,
-            rootMargin: "20px",
-            threshold: 1.0,
-        };
-        const observer = new IntersectionObserver(handleObserver, options);
-        if (loader.current) {
-            observer.observe(loader.current);
-        }
-        
-        // Очищаем observer при размонтировании
-        return () => {
-            if (loader.current) {
-                observer.unobserve(loader.current);
-            }
-        };
-    }, [handleObserver]);
+  // Добавляем loadMore в зависимости
+  useEffect(() => {
+    loadMore();
+  }, [loadMore]);
 
-    const handleNameChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setName(event.target.value);
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: "20px",
+      threshold: 1.0,
     };
 
-    const handleSubmit = () => {
-        const review: ReviewItem = { name, ratingIndex, date: new Date() };
+    const currentLoader = loader.current; // ← Копируем в переменную
 
-        axios
-            .post("https://restaurant-server-ohyq.onrender.com", review)
-            .then((response) => {
-                console.log(response);
-                setReviews(prev => [...prev, review]);
-            })
-            .catch((error) => console.error(error));
+    const observer = new IntersectionObserver(handleObserver, options);
+    if (currentLoader) {
+      observer.observe(currentLoader);
+    }
 
-        setName("");
-        setRatingIndex(-1);
+    // Используем скопированную переменную в cleanup
+    return () => {
+      if (currentLoader) {
+        observer.unobserve(currentLoader);
+      }
     };
+  }, [handleObserver]);
 
-    // Удаляем этот useEffect, так как данные уже грузятся через loadMore
-    // useEffect(() => {
-    //     axios
-    //         .get("https://restaurant-server-ohyq.onrender.com/setting")
-    //         .then((response) => setReviews(response.data))
-    //         .catch((error) => console.error(error));
-    // }, []);
+  const handleNameChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setName(event.target.value);
+  };
 
-    return (
-        <div>
-            <Container className="mt-2">
-                <h2 className="text-center pt-2 pb-2">Оставить отзыв</h2>
-                <div className="d-flex justify-content-center">
-                    
-                </div>
+  const handleSubmit = () => {
+    const review: ReviewItem = { name, ratingIndex, date: new Date() };
 
-                <FloatingLabel controlId="floatingTextarea2" label="Комментарий">
-                    <Form.Control
-                        as="textarea"
-                        placeholder="Leave a comment here"
-                        maxLength={200}
-                        className="otziv-area"
-                        onChange={handleNameChange}
-                        value={name}
-                    />
-                </FloatingLabel>
-                <div className="d-flex justify-content-between">
-                    <div className="d-flex">
-                        {rating.map((r, i) => (
-                            <nav
-                                key={i}
-                                onClick={() => setRatingIndex(i)}
-                                className={
-                                    ratingIndex >= i ? "reviewRest text-warning" : "reviewRest"
-                                }
-                            >
-                                {r}
-                            </nav>
-                        ))}
-                    </div>
-                    {!name.trim() || ratingIndex === -1
-                        ? <Button variant="secondary mt-1">Добавить</Button>
-                        : <Button variant="warning mt-1" onClick={handleSubmit}>Добавить</Button>}
-                </div>
-                <hr />
-                <h2 className="text-center text-dark pt-2 pb-2">Отзывы</h2>
-                {reviews.map((item: ReviewItem, index: number) => (
-                    <div key={index}>
-                        <Alert variant="light">
-                            <div className="d-flex justify-content-between">
-                                <h5 className="text-dark">
-                                    <img className="pb-1" src="https://cdn2.iconfinder.com/data/icons/school-set-5/512/6-20.png" alt="" /> {moment(item.date).format("DD/MM/YYYY")}
-                                </h5>
-                                <div className="d-flex">
-                                    {rating.map((r, i) => (
-                                        <h4
-                                            key={i}
-                                            className={i <= item.ratingIndex ? "text-warning" : ""}
-                                        >
-                                            {r}
-                                        </h4>
-                                    ))}
-                                </div>
-                            </div>
-                            <p style={{ wordWrap: "break-word" }}>
-                                <img className="me-2 mb-2" src="https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_user-24.png" alt="" />
-                                {item.name}
-                            </p>
-                        </Alert>
-                    </div>
-                ))}
-                <div ref={loader}></div>
-                {!hasMore && <p className="text-center text-secondary">Больше нет отзывов</p>}
-            </Container>
+    axios
+      .post("https://restaurant-server-ohyq.onrender.com", review)
+      .then((response) => {
+        console.log(response);
+        setReviews((prev) => [...prev, review]);
+      })
+      .catch((error) => console.error(error));
+
+    setName("");
+    setRatingIndex(-1);
+  };
+
+  // Удаляем этот useEffect, так как данные уже грузятся через loadMore
+  // useEffect(() => {
+  //     axios
+  //         .get("https://restaurant-server-ohyq.onrender.com/setting")
+  //         .then((response) => setReviews(response.data))
+  //         .catch((error) => console.error(error));
+  // }, []);
+
+  return (
+    <div>
+      <Container className="mt-2">
+        <h2 className="text-center pt-2 pb-2">Оставить отзыв</h2>
+        <div className="d-flex justify-content-center"></div>
+
+        <FloatingLabel controlId="floatingTextarea2" label="Комментарий">
+          <Form.Control
+            as="textarea"
+            placeholder="Leave a comment here"
+            maxLength={200}
+            className="otziv-area"
+            onChange={handleNameChange}
+            value={name}
+          />
+        </FloatingLabel>
+        <div className="d-flex justify-content-between">
+          <div className="d-flex">
+            {rating.map((r, i) => (
+              <nav
+                key={i}
+                onClick={() => setRatingIndex(i)}
+                className={
+                  ratingIndex >= i ? "reviewRest text-warning" : "reviewRest"
+                }
+              >
+                {r}
+              </nav>
+            ))}
+          </div>
+          {!name.trim() || ratingIndex === -1 ? (
+            <Button variant="secondary mt-1">Добавить</Button>
+          ) : (
+            <Button variant="warning mt-1" onClick={handleSubmit}>
+              Добавить
+            </Button>
+          )}
         </div>
-    );
+        <hr />
+        <h2 className="text-center text-dark pt-2 pb-2">Отзывы</h2>
+        {reviews.map((item: ReviewItem, index: number) => (
+          <div key={index}>
+            <Alert variant="light">
+              <div className="d-flex justify-content-between">
+                <h5 className="text-dark">
+                  <img
+                    className="pb-1"
+                    src="https://cdn2.iconfinder.com/data/icons/school-set-5/512/6-20.png"
+                    alt=""
+                  />{" "}
+                  {moment(item.date).format("DD/MM/YYYY")}
+                </h5>
+                <div className="d-flex">
+                  {rating.map((r, i) => (
+                    <h4
+                      key={i}
+                      className={i <= item.ratingIndex ? "text-warning" : ""}
+                    >
+                      {r}
+                    </h4>
+                  ))}
+                </div>
+              </div>
+              <p style={{ wordWrap: "break-word" }}>
+                <img
+                  className="me-2 mb-2"
+                  src="https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_user-24.png"
+                  alt=""
+                />
+                {item.name}
+              </p>
+            </Alert>
+          </div>
+        ))}
+        <div ref={loader}></div>
+        {!hasMore && (
+          <p className="text-center text-secondary">Больше нет отзывов</p>
+        )}
+      </Container>
+    </div>
+  );
 };
