@@ -1,46 +1,65 @@
-# Getting Started with Create React App
+<div align="center">
+  <img src="https://cdn.worldvectorlogo.com/logos/react-2.svg" width="80" />
+  <h1 align="center">RESTAURANT</h1>
+  <p align="center">
+    <strong>Крутое React-приложение, для моего партфолио</strong>
+  </p>
+  <p align="center">
+    <a href="https://restaurant-client-five.vercel.app/">
+      <strong>🔗 Посмотреть демо</strong>
+    </a>
+  </p>
+</div>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
 
-## Available Scripts
+## 🦍 О проекте
 
-In the project directory, you can run:
+Это мой пет проект на основе react-pizza. Но я его усовершенствовал. Я добавил комментарии (отзывы). Каждый клиент может оставить свой отзыв. Еще я добавил функцию соединения двух пицц. На момент написания этого проекта а именно 2023 год, еще не было чата гпт, поэтому я с гордостью могу сказать что дописал его лично я. Также я к нему дописал бекенд. Сделал конект с телеграм ботом куда приходят заявки о заказе пицц, добавил файл для хранения отзывов и пользователей. Изменил дизайн
 
-### `npm start`
+![Скриншот приложения](public/two-pizzas.png)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**📌 Основной функционал:**
+- 🍕 Соединения двух роловинок пицц
+- 🥨 Отзывы и комментарии от клиентов
+- 🎨 Связь с телеграм ботом для заказа пицц
+- 📱 Полностью адаптивный дизайн
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+![Скриншот приложения](public/review.png)
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🛠️ Технологии
 
-### `npm run build`
+<div align="center">
+  
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![NodeJS](https://img.shields.io/badge/NodeJS-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+</div>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+**Библиотеки и инструменты:**
+- [React Router DOM](https://reactrouter.com/) — маршрутизация
+- [Axios](https://axios-http.com/) — работа с API
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## 🚀 Быстрый старт
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Установка и запуск
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+# Клонируйте репозиторий
+git clone https://github.com/ngabibullaev/coderix.git
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+# Перейдите в папку проекта
+cd coderix
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+# Установите зависимости
+npm install
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+# Запустите в режиме разработки
+npm start
