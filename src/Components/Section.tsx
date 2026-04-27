@@ -147,7 +147,7 @@ export const Section: React.FC = () => {
                 <Alert.Heading>{items[activeIndex].name}</Alert.Heading>
                 <p className="text-secondary">{items[activeIndex].title}</p>
                 <b>
-                  Рейтинг: <a>{items[activeIndex].rating}/100</a>
+                  Рейтинг: <span>{items[activeIndex].rating}/100</span>
                 </b>
                 <ProgressBar className="mt-2" now={items[activeIndex].rating} />
               </>

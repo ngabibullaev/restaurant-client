@@ -19,15 +19,15 @@ function AppWrapper() {
 }
 
 // Компонент для отображения сообщения о закрытии
-function Closed() {
-  return (
-    <div style={{marginTop: "10em"}}>
-      <h1 className="text-center mt-5 text-danger">В данный момент бы закрыты!</h1>
-      <h4 className="mt-4 text-center">Наш рабочий график с 10:00 до 24:00</h4>
-      <img className="mx-auto d-block" src="https://cdn0.iconfinder.com/data/icons/business-finance-v2-0/64/store-sign-closed-256.png" alt="" />
-    </div>
-  );
-}
+// function Closed() {
+//   return (
+//     <div style={{marginTop: "10em"}}>
+//       <h1 className="text-center mt-5 text-danger">В данный момент бы закрыты!</h1>
+//       <h4 className="mt-4 text-center">Наш рабочий график с 10:00 до 24:00</h4>
+//       <img className="mx-auto d-block" src="https://cdn0.iconfinder.com/data/icons/business-finance-v2-0/64/store-sign-closed-256.png" alt="" />
+//     </div>
+//   );
+// }
 
 // Оберточный компонент
 function TimeWrapper(): JSX.Element {

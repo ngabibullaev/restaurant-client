@@ -6,8 +6,6 @@ import { Baket } from "./Basket/Baket";
 import { Buy } from "./Buy/Buy";
 import { TwoPizzas } from "./Buy/TwoPizzas";
 import { Footer } from "./Components/Footer";
-import { Review } from "./Components/Review";
-import { useLocation } from "react-router-dom";
 import ScrollToTopButton from "./Components/ScrollToTopButton";
 
 export const Root = () => {

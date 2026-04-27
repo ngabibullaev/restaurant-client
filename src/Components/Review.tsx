@@ -39,7 +39,7 @@ export const Review: React.FC = () => {
 
     useEffect(() => {
         loadMore();
-    }, []);
+    }, [loadMore]);
 
     const handleObserver = (entities: IntersectionObserverEntry[]) => {
         const target = entities[0];
@@ -58,7 +58,7 @@ export const Review: React.FC = () => {
         if (loader.current) {
             observer.observe(loader.current);
         }
-    }, []);
+    }, [handleObserver]);
 
     const handleNameChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setName(event.target.value);

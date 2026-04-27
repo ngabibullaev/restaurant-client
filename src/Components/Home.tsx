@@ -6,7 +6,7 @@ import { Main } from "./Main";
 import { Navbar } from "./Navbar";
 import { Form } from "./Form";
 import { Section } from "./Section";
-import { Accordion, Container } from "react-bootstrap";
+import { Accordion } from "react-bootstrap";
 import { Review } from "./Review";
 import { Slider } from "./Slider";
 
