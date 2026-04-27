@@ -94,7 +94,7 @@ export const Buy: React.FC = () => {
       setShow(true)
     }
 
-    axios.post('/sendMessage', data)
+    axios.post('https://restaurant-server-ohyq.onrender.com/sendMessage', data)
       .then(response => {
         if (response.data.success) {
           console.log('Сообщение отправлено');

@@ -1,7 +1,5 @@
-import React from "react";
 import BaketCards from "./BaketCards";
 import { useDispatch, useSelector } from "react-redux";
-import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { RootState } from "../Redux/store";
@@ -78,8 +76,8 @@ export const BasketSection = () => {
           
         </div>
         {items.map((item) => (
-        <div style={{ background: "white", margin: "10px 0", padding: "5px 0", border: "1px solid #e4e4e4"}}>
-          <BaketCards key={item.id} {...item} />
+        <div key={item.id} style={{ background: "white", margin: "10px 0", padding: "5px 0", border: "1px solid #e4e4e4"}}>
+          <BaketCards {...item} />
         </div>
         ))}
         <div className="d-flex justify-content-between mb-2 mx-2">

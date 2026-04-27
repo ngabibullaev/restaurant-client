@@ -27,7 +27,7 @@ export const Review: React.FC = () => {
 
     const loadMore = async () => {
         if (hasMore) {
-            const response = await axios.get(`/setting?_page=${page}&_limit=${PAGE_SIZE}`);
+            const response = await axios.get(`https://restaurant-server-ohyq.onrender.com/setting?_page=${page}&_limit=${PAGE_SIZE}`);
             const newReviews = response.data;
             setReviews([...reviews, ...newReviews]);
             setPage(page + 1);
@@ -69,7 +69,7 @@ export const Review: React.FC = () => {
         const review: ReviewItem = { name, ratingIndex, date: new Date() };
 
         axios
-            .post("/", review)
+            .post("https://restaurant-server-ohyq.onrender.com", review)
             .then((response) => {
                 console.log(response);
                 setReviews([...reviews, review]);
@@ -82,7 +82,7 @@ export const Review: React.FC = () => {
 
     useEffect(() => {
         axios
-            .get("/setting")
+            .get("https://restaurant-server-ohyq.onrender.com/setting")
             .then((response) => setReviews(response.data))
             .catch((error) => console.error(error));
     }, []);
@@ -128,7 +128,7 @@ export const Review: React.FC = () => {
                 {reviews.map((item: ReviewItem, index: number) => (
                     <div key={index}>
                         <Alert variant="light">
-                            <p className="d-flex justify-content-between">
+                            <div className="d-flex justify-content-between">
                                 <h5 className="text-dark">
                                     <img className="pb-1" src="https://cdn2.iconfinder.com/data/icons/school-set-5/512/6-20.png" alt="" /> {moment(item.date).format("DD/MM/YYYY")}
                                 </h5>
@@ -142,7 +142,7 @@ export const Review: React.FC = () => {
                                         </h4>
                                     ))}
                                 </div>
-                            </p>
+                            </div>
                             <p style={{ wordWrap: "break-word" }}><img className="me-2 mb-2" src="https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_user-24.png" alt="" />{item.name}</p>
                         </Alert>
                     </div>

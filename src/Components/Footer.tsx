@@ -1,8 +1,6 @@
-import React from 'react'
-import { Button, Col, Container, Row } from 'react-bootstrap'
+import { Col, Container, Row } from 'react-bootstrap'
 import "../Styles/Section.scss"
 import "../Styles/Review.scss"
-import { Link, useLocation } from 'react-router-dom'
 
 export const Footer = () => {
 

@@ -1,7 +1,6 @@
 import React, { useCallback, useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import ProgressBar from "react-bootstrap/ProgressBar";
 // @ts-ignore
 import star4 from '../Assets/star4.png'
 // @ts-ignore

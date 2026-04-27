@@ -1,4 +1,3 @@
-import React from 'react'
 import "../Styles/Basket-main.scss"
 import "../Styles/BasketSection.scss"
 import { BasketMain } from './BasketMain';

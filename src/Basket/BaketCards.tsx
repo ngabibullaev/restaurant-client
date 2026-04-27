@@ -45,7 +45,7 @@ const BasketCards: React.FC<BasketCardProps> = React.memo(
                 className="card-image"
                 src={
                   imageUrl ||
-                  "https://dodopizza-a.akamaihd.net/static/Img/Products/e3f5dfcb094b4c9b8200ca9f573cb2f1_292x292.webp"
+                  "https://media.dodostatic.net/image/r:292x292/0198bf589106736aa2016b8d2dbeca55.jpg"
                 }
                 alt=""
               />
