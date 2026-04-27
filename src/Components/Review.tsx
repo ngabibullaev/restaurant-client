@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Alert, Button, Container } from "react-bootstrap";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
@@ -18,36 +18,38 @@ export const Review: React.FC = () => {
 
     const [ratingIndex, setRatingIndex] = useState<number>(-1);
     const [reviews, setReviews] = useState<ReviewItem[]>([]);
-
     const [name, setName] = useState<string>("");
-
     const [page, setPage] = useState(0);
     const [hasMore, setHasMore] = useState(true);
     const loader = useRef<HTMLDivElement | null>(null);
 
-    const loadMore = async () => {
+    // Оборачиваем loadMore в useCallback
+    const loadMore = useCallback(async () => {
         if (hasMore) {
             const response = await axios.get(`https://restaurant-server-ohyq.onrender.com/setting?_page=${page}&_limit=${PAGE_SIZE}`);
             const newReviews = response.data;
-            setReviews([...reviews, ...newReviews]);
-            setPage(page + 1);
+            setReviews(prev => [...prev, ...newReviews]);
+            setPage(prev => prev + 1);
             if (newReviews.length < PAGE_SIZE) {
                 setHasMore(false);
             }
         }
-    };
+    }, [hasMore, page]);
 
-    useEffect(() => {
-        loadMore();
-    }, []);
-
-    const handleObserver = (entities: IntersectionObserverEntry[]) => {
+    // Оборачиваем handleObserver в useCallback
+    const handleObserver = useCallback((entities: IntersectionObserverEntry[]) => {
         const target = entities[0];
         if (target.isIntersecting && hasMore) {
             loadMore();
         }
-    };
+    }, [hasMore, loadMore]);
 
+    // Добавляем loadMore в зависимости
+    useEffect(() => {
+        loadMore();
+    }, [loadMore]);
+
+    // Добавляем handleObserver в зависимости и очищаем observer
     useEffect(() => {
         const options = {
             root: null,
@@ -58,21 +60,27 @@ export const Review: React.FC = () => {
         if (loader.current) {
             observer.observe(loader.current);
         }
-    }, []);
+        
+        // Очищаем observer при размонтировании
+        return () => {
+            if (loader.current) {
+                observer.unobserve(loader.current);
+            }
+        };
+    }, [handleObserver]);
 
     const handleNameChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setName(event.target.value);
     };
 
     const handleSubmit = () => {
-
         const review: ReviewItem = { name, ratingIndex, date: new Date() };
 
         axios
             .post("https://restaurant-server-ohyq.onrender.com", review)
             .then((response) => {
                 console.log(response);
-                setReviews([...reviews, review]);
+                setReviews(prev => [...prev, review]);
             })
             .catch((error) => console.error(error));
 
@@ -80,12 +88,13 @@ export const Review: React.FC = () => {
         setRatingIndex(-1);
     };
 
-    useEffect(() => {
-        axios
-            .get("https://restaurant-server-ohyq.onrender.com/setting")
-            .then((response) => setReviews(response.data))
-            .catch((error) => console.error(error));
-    }, []);
+    // Удаляем этот useEffect, так как данные уже грузятся через loadMore
+    // useEffect(() => {
+    //     axios
+    //         .get("https://restaurant-server-ohyq.onrender.com/setting")
+    //         .then((response) => setReviews(response.data))
+    //         .catch((error) => console.error(error));
+    // }, []);
 
     return (
         <div>
@@ -106,19 +115,19 @@ export const Review: React.FC = () => {
                     />
                 </FloatingLabel>
                 <div className="d-flex justify-content-between">
-                <div className="d-flex">
-                {rating.map((r, i) => (
-                        <nav
-                            key={i}
-                            onClick={() => setRatingIndex(i)}
-                            className={
-                                ratingIndex >= i ? "reviewRest text-warning" : "reviewRest"
-                            }
-                        >
-                            {r}
-                        </nav>
-                    ))}
-                </div>
+                    <div className="d-flex">
+                        {rating.map((r, i) => (
+                            <nav
+                                key={i}
+                                onClick={() => setRatingIndex(i)}
+                                className={
+                                    ratingIndex >= i ? "reviewRest text-warning" : "reviewRest"
+                                }
+                            >
+                                {r}
+                            </nav>
+                        ))}
+                    </div>
                     {!name.trim() || ratingIndex === -1
                         ? <Button variant="secondary mt-1">Добавить</Button>
                         : <Button variant="warning mt-1" onClick={handleSubmit}>Добавить</Button>}
@@ -143,7 +152,10 @@ export const Review: React.FC = () => {
                                     ))}
                                 </div>
                             </div>
-                            <p style={{ wordWrap: "break-word" }}><img className="me-2 mb-2" src="https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_user-24.png" alt="" />{item.name}</p>
+                            <p style={{ wordWrap: "break-word" }}>
+                                <img className="me-2 mb-2" src="https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_user-24.png" alt="" />
+                                {item.name}
+                            </p>
                         </Alert>
                     </div>
                 ))}
