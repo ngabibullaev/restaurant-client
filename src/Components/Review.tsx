@@ -37,6 +37,7 @@ export const Review: React.FC = () => {
     }
   }, [hasMore, page]);
 
+  // Оборачиваем handleObserver в useCallback
   const handleObserver = useCallback(
     (entities: IntersectionObserverEntry[]) => {
       const target = entities[0];
