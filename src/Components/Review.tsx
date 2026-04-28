@@ -37,6 +37,7 @@ export const Review: React.FC = () => {
     }
   }, [hasMore, page]);
 
+  // Оборачиваем handleObserver в useCallback
   const handleObserver = useCallback(
     (entities: IntersectionObserverEntry[]) => {
       const target = entities[0];
@@ -47,6 +48,7 @@ export const Review: React.FC = () => {
     [hasMore, loadMore],
   );
 
+  // Добавляем loadMore в зависимости
   useEffect(() => {
     loadMore();
   }, [loadMore]);
@@ -58,13 +60,14 @@ export const Review: React.FC = () => {
       threshold: 1.0,
     };
 
-    const currentLoader = loader.current; 
+    const currentLoader = loader.current; // ← Копируем в переменную
 
     const observer = new IntersectionObserver(handleObserver, options);
     if (currentLoader) {
       observer.observe(currentLoader);
     }
 
+    // Используем скопированную переменную в cleanup
     return () => {
       if (currentLoader) {
         observer.unobserve(currentLoader);
@@ -90,6 +93,14 @@ export const Review: React.FC = () => {
     setName("");
     setRatingIndex(-1);
   };
+
+  // Удаляем этот useEffect, так как данные уже грузятся через loadMore
+  // useEffect(() => {
+  //     axios
+  //         .get("https://restaurant-server-ohyq.onrender.com/setting")
+  //         .then((response) => setReviews(response.data))
+  //         .catch((error) => console.error(error));
+  // }, []);
 
   return (
     <div>
