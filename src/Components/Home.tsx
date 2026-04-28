@@ -12,7 +12,7 @@ import { Slider } from "./Slider";
 
 export const Home = () => {
 
-  const isDesktop = window.innerWidth >= 1440; // Threshold value for desktop devices
+  const isDesktop = window.innerWidth >= 1440;
 
   return (
     <div style={{ background: "#f1f1f1" }}>
