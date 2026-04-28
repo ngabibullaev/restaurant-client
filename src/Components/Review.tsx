@@ -23,7 +23,6 @@ export const Review: React.FC = () => {
   const [hasMore, setHasMore] = useState(true);
   const loader = useRef<HTMLDivElement | null>(null);
 
-  // Оборачиваем loadMore в useCallback
   const loadMore = useCallback(async () => {
     if (hasMore) {
       const response = await axios.get(
