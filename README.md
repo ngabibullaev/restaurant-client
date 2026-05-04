@@ -44,7 +44,7 @@
 **Библиотеки и инструменты:**
 - [React Router DOM](https://reactrouter.com/) — маршрутизация
 - [Axios](https://axios-http.com/) — работа с API
-- [Redux Toolkit]([https://axios-http.com/](https://redux-toolkit.js.org/)) — работа с API
+- [Redux Toolkit](https://redux-toolkit.js.org/) — работа с API
 
 ---
 
