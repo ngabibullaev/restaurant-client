@@ -2,23 +2,23 @@ import React, { useCallback, useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 // @ts-ignore
-import star4 from '../Assets/star4.png'
+import star4 from "../Assets/star4.png";
 // @ts-ignore
-import star5 from '../Assets/star5.png'
+import star5 from "../Assets/star5.png";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../Redux/Logic/cartSlice";
 import { RootState } from "../Redux/store";
 import { Accordion, Badge } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 interface CartonProps {
-  id: number;
+  id: string;
   name: string;
   imageUrl: string;
   title: string;
   price: number;
   rating: number;
   actionsed: string;
-  setShow: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Carton: React.FC<CartonProps> = ({
@@ -29,9 +29,8 @@ const Carton: React.FC<CartonProps> = ({
   price,
   rating,
   actionsed,
-  setShow,
 }) => {
-  const [starRating, setStarRating] = useState()
+  const [starRating, setStarRating] = useState();
   const dispatch = useDispatch();
 
   const onClickAdd = useCallback(() => {
@@ -45,53 +44,82 @@ const Carton: React.FC<CartonProps> = ({
   }, [dispatch, id, name, price, imageUrl]);
 
   const cartItem = useSelector((state: RootState) =>
-    state.cart.items.find((obj) => obj.id === id)
+    state.cart.items.find((obj) => obj.id === id),
   );
 
   const addedCount = cartItem ? cartItem.count : 0;
 
   useEffect(() => {
     if (rating > 60 && rating < 90) {
-      setStarRating((prevState) => prevState = star4)
+      setStarRating((prevState) => (prevState = star4));
     } else if (rating > 90) {
-      setStarRating((prevState) => prevState = star5)
+      setStarRating((prevState) => (prevState = star5));
     }
-  }, [rating])
+  }, [rating]);
 
   return (
-    <Card className="foods">
-      <Card.Img
-        onClick={() => setShow(true)}
-        className="imgFood"
-        variant="top"
-        src={imageUrl}
-      />
-                <Badge className="action" bg="warning" text="dark">
-                  {actionsed}
-                </Badge>
-      <Card.Body>
-        <Accordion className="mb-2" defaultActiveKey="1">
+    <Card className="product-card-modern" data-aos="fade-up">
+      <div className="card-image-wrapper">
+        <Card.Img
+          className="product-image"
+          variant="top"
+          src={imageUrl}
+        />
+        {actionsed && (
+          <div className="discount-badge">
+            <span className="discount-text">{actionsed}</span>
+          </div>
+        )}
+
+        <div className="image-overlay">
+          <Button
+            className="quick-view-btn"
+            variant="light"
+          >
+            <Link className="LinkButtonImg" to={`/pizza/${id}`}>
+              Быстрый просмотр
+            </Link>
+          </Button>
+        </div>
+      </div>
+
+      <Card.Body className="card-content">
+        <div className="product-header">
+          <h3 className="product-title">{name}</h3>
+          <div className="rating-wrapper">
+            <img src={starRating} alt="Rating" className="rating-stars" />
+            <span className="rating-value">{rating}/100</span>
+          </div>
+        </div>
+
+        <Accordion className="product-accordion" defaultActiveKey="">
           <Accordion.Item eventKey="0">
-            <Accordion.Header className="acord-name">
-              <Card.Title>{name}</Card.Title>
+            <Accordion.Header className="accordion-custom">
+              <span className="accordion-title">Описание</span>
             </Accordion.Header>
-            <Accordion.Body>
-              <Card.Text style={{ color: "gray", margin: "0 20px", paddingBottom: "20px" }}>
-                {title}
-              </Card.Text>
+            <Accordion.Body className="accordion-body-custom">
+              <p className="product-description">{title}</p>
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>
-        <div className="badge-count">
-        {addedCount > 0 && (
-          <Badge className="bg-secondary">+{addedCount}</Badge>
-          )}
+
+        <div className="product-footer">
+          <div className="price-section d-flex">
+            <span className="price-current">{price} ₽</span>
+          </div>
+          <Button
+            onClick={onClickAdd}
+            className="add-to-cart-btn"
+            variant="dark"
+          >
+            Добавить{" "}
+            {addedCount > 0 && (
+              <div className="count-badge">
+                <span className="count-number">+{addedCount}</span>
+              </div>
+            )}
+          </Button>
         </div>
-            <img style={{margin: "10px auto", display: "block"}} src={starRating} alt="" />
-        {actionsed ? <b className="textPrice text-danger">{price} ₽</b> : <b className="textPrice">{price} ₽</b>}
-        <Button onClick={onClickAdd} className="btnAdd" variant="outline-dark">
-          <b>Добавить</b>
-        </Button>
       </Card.Body>
     </Card>
   );

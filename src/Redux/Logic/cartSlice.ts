@@ -3,13 +3,14 @@ import { getCartFromLS } from '../../Utils/getCartFromLS';
 import { calcTotalPrice } from '../../Utils/calcTotalPrice';
 
 export type ICartItem = {
-  id: number;
+  id: string;
   idResult: number;
   price: number
   result: number
   count: number
   name: string
   nameResult: string
+  imageLeftOrRight: string[]
   // Добавьте все свойства элемента корзины
 }
 
@@ -76,6 +77,6 @@ export const { addItem, removeItem, clearItems, minusItem } = cartSlice.actions;
 
 export default cartSlice.reducer;
 
-function findItem(items: ICartItem[], id: number, idResult: number) {
+function findItem(items: ICartItem[], id: string, idResult: number) {
   return items.findIndex(obj => obj.id === id && obj.idResult === idResult);
 }

@@ -26,10 +26,15 @@ export const logicSlice = createSlice({
     setSearch(state, action) {
       state.search = action.payload //меняем стейт тут
     },
+    
+    setFilters(state, action) {
+      state.sortId = action.payload.sortId //меняем стейт тут
+      state.categoryId = Number(action.payload.categoryId) //меняем стейт тут
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setCategoryId, setSortId, setSortOrder, setSearch } = logicSlice.actions
+export const { setCategoryId, setSortId, setSortOrder, setSearch, setFilters } = logicSlice.actions
 
 export default logicSlice.reducer

@@ -1,123 +1,1007 @@
-.foods {
-    margin: 0 auto;
-    /* устанавливаем отступы сверху и снизу равными нулю, а слева и справа автоматически для центрирования */
-    float: none;
-    /* отменяем действие float, если таковое задано в другом месте */
-    background: rgb(255, 255, 255) !important;
-    color: rgb(0, 0, 0) !important;
-    border: 1px solid rgba(0, 0, 0, 0.13) !important;
-    margin-top: 30px;
-    border-radius: 20px !important;
-    width: 19em;
-    overflow: hidden;
-    user-select: none;
+.product-section {
+  padding: 2rem 0;
+  min-height: 100vh;
 }
 
-.imgFood {
-    cursor: pointer;
-    width: 100%;
-    height: 300px;   
-    transition: all 0.5s ease;
-    &:hover {
-        transform: scale(1.1);
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 24px;
+  margin: 2rem auto;
+}
+
+.empty-icon {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 1rem;
+  color: #ddd;
+}
+
+.empty-text {
+  font-size: 1.5rem;
+  color: #999;
+  font-weight: 500;
+}
+
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.rating-section {
+  margin-top: 1rem;
+}
+
+.rating-progress {
+  height: 6px !important;
+  border-radius: 10px;
+  margin-top: 0.5rem;
+}
+
+.rating-progress .progress-bar {
+  background: linear-gradient(90deg, #ffd700, #ffed4e) !important;
+  border-radius: 10px;
+}
+
+.product-card-modern {
+  background: white;
+  border: none !important;
+  border-radius: 20px !important;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card-modern:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Обёртка для изображения */
+.card-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+  padding-top: 100%; /* Соотношение 4:3 */
+}
+
+.product-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+  cursor: pointer;
+}
+
+.product-card-modern:hover .product-image {
+  transform: scale(1.1);
+}
+
+/* Бейджи */
+.discount-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%);
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  z-index: 2;
+  box-shadow: 0 2px 10px rgba(255, 71, 87, 0.3);
+  animation: slideInLeft 0.3s ease;
+}
+
+.count-badge {
+  position: absolute;
+  background: #ffd700;
+  color: black;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.9rem;
+  font-weight: 700;
+  z-index: 2;
+  animation: bounceIn 0.3s ease;
+  margin-left: 75px;
+  margin-top: -28px;
+}
+
+/* Оверлей при наведении */
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.card-image-wrapper:hover .image-overlay {
+  opacity: 1;
+}
+
+.quick-view-btn {
+  border-radius: 50px !important;
+  padding: 0.6rem 1.5rem !important;
+  font-weight: 600 !important;
+  transform: translateY(20px);
+  transition: all 0.3s ease !important;
+  border: none !important;
+}
+
+.card-image-wrapper:hover .quick-view-btn {
+  transform: translateY(0);
+}
+
+.quick-view-btn:hover {
+  transform: scale(1.05) !important;
+  background: #ffd700 !important;
+}
+
+/* Контент карточки */
+.card-content {
+  padding: 1.25rem !important;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-header {
+  margin-bottom: 1rem;
+}
+
+.product-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.rating-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rating-stars {
+  height: 18px;
+  width: auto;
+}
+
+.rating-value {
+  font-size: 0.85rem;
+  color: #ffd700;
+  font-weight: 600;
+}
+
+.product-description {
+  color: #6c757d;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  padding: 20px;
+}
+
+/* Футер карточки */
+.product-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid #e9ecef;
+}
+
+.price-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.price-current {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #ff4757;
+  line-height: 1;
+}
+
+.price-original {
+  font-size: 0.9rem;
+  color: #6c757d;
+  text-decoration: line-through;
+}
+
+.price-discount {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #ff4757;
+}
+
+/* Кнопка добавления */
+.add-to-cart-btn {
+  background: linear-gradient(135deg, #2c3e50 0%, #1a1a2e 100%) !important;
+  border: none !important;
+  border-radius: 50px !important;
+  padding: 0.5rem 1.2rem !important;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease !important;
+  font-weight: 600 !important;
+}
+
+.add-to-cart-btn:hover {
+  transform: scale(0.95);
+  background: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%) !important;
+}
+
+.cart-icon {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.2s ease;
+}
+
+.add-to-cart-btn:hover .cart-icon {
+  transform: translateX(3px);
+}
+
+/* Анимации */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .product-title {
+    font-size: 1rem;
+  }
+  
+  .price-current {
+    font-size: 1.1rem;
+  }
+  
+  .add-to-cart-btn {
+    padding: 0.4rem 1rem !important;
+    font-size: 0.85rem;
+  }
+  
+  .quick-view-btn {
+    padding: 0.4rem 1rem !important;
+    font-size: 0.85rem;
+  }
+}
+
+/* Скелетон загрузки */
+.product-card-modern.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+
+/* Обертка аккордеона */
+.accordion-wrapper {
+  padding: 1rem;
+  border-radius: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Декоративный фон */
+.accordion-wrapper::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Стили для элементов аккордеона */
+.accordion-menu-item,
+.accordion-reviews-item {
+  background: transparent !important;
+  border: none !important;
+  margin-bottom: 1rem;
+  border-radius: 16px !important;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.accordion-menu-item:hover,
+.accordion-reviews-item:hover {
+  transform: translateY(-2px);
+}
+
+/* Заголовки аккордеона */
+.accordion-header-modern {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-radius: 16px !important;
+  margin: 0 !important;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.accordion-header-modern:hover {
+  background: rgba(255, 255, 255, 1) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Кнопка заголовка */
+.accordion-header-modern button {
+  background: transparent !important;
+  color: #2c3e50 !important;
+  font-weight: 700 !important;
+  font-size: 1.1rem !important;
+  padding: 1.25rem 1.5rem !important;
+  box-shadow: none !important;
+  border-radius: 16px !important;
+  transition: all 0.3s ease !important;
+  letter-spacing: 0.5px;
+}
+
+.accordion-header-modern button::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23667eea' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  transition: transform 0.3s ease !important;
+}
+
+.accordion-header-modern button:not(.collapsed)::after {
+  transform: rotate(180deg) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23ffd700' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+}
+
+/* Активное состояние */
+.accordion-header-modern button:not(.collapsed) {
+  background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%) !important;
+  color: white !important;
+  border-radius: 16px 16px 0 0 !important;
+}
+
+.accordion-header-modern button:focus {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Иконка в заголовке */
+.header-icon {
+  margin-right: 12px;
+  font-size: 1.3rem;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.accordion-header-modern:hover .header-icon {
+  transform: scale(1.1);
+}
+
+.accordion-header-modern button:not(.collapsed) .header-icon {
+  animation: iconBounce 0.5s ease;
+}
+
+@keyframes iconBounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/* Тело аккордеона */
+.accordion-body-modern {
+  background: rgba(243, 243, 243, 0.98) !important;
+  padding: 1.5rem !important;
+  border-top: 3px solid #ffd700;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Стили для разных элементов внутри аккордеона */
+.accordion-body-modern .navbar {
+  margin-bottom: 1rem;
+  padding: 0;
+}
+
+.accordion-body-modern .Form {
+  margin-bottom: 1rem;
+}
+
+.accordion-body-modern .Section {
+  margin-top: 1rem;
+}
+
+/* Кастомный скролл для тела аккордеона */
+.accordion-body-modern::-webkit-scrollbar {
+  width: 6px;
+}
+
+.accordion-body-modern::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.accordion-body-modern::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+  border-radius: 10px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .accordion-wrapper {
+    padding: 0.5rem;
+  }
+  
+  .accordion-header-modern button {
+    padding: 1rem 1.2rem !important;
+    font-size: 0.95rem !important;
+  }
+  
+  .accordion-body-modern {
+    padding: 1rem !important;
+  }
+  
+  .header-icon {
+    font-size: 1.1rem;
+    margin-right: 8px;
+  }
+}
+
+/* Анимация загрузки содержимого */
+.accordion-body-modern > * {
+  animation: fadeInUp 0.4s ease forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Задержки для дочерних элементов */
+.accordion-body-modern > *:nth-child(1) { animation-delay: 0.1s; }
+.accordion-body-modern > *:nth-child(2) { animation-delay: 0.2s; }
+.accordion-body-modern > *:nth-child(3) { animation-delay: 0.3s; }
+
+/* Статус открытия/закрытия */
+.accordion-menu-item .accordion-collapse,
+.accordion-reviews-item .accordion-collapse {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Эффект ripple при клике */
+.accordion-header-modern button {
+  position: relative;
+  overflow: hidden;
+}
+
+.accordion-header-modern button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 215, 0, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.accordion-header-modern button:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Градиентная граница для активного элемента */
+.accordion-menu-item:has(.accordion-header-modern button:not(.collapsed)),
+.accordion-reviews-item:has(.accordion-header-modern button:not(.collapsed)) {
+  box-shadow: 0 0 0 2px #ffd700, 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Стили для текста в заголовке */
+.accordion-header-modern button span {
+  position: relative;
+  z-index: 1;
+}
+
+/* Иконка корзины в аккордеоне (если есть) */
+.accordion-body-modern .basket-button {
+  transition: all 0.3s ease;
+}
+
+.accordion-body-modern .basket-button:hover {
+  transform: scale(1.05);
+}
+
+/* Стили для форм внутри аккордеона */
+.accordion-body-modern input,
+.accordion-body-modern textarea,
+.accordion-body-modern select {
+  transition: all 0.3s ease;
+}
+
+.accordion-body-modern input:focus,
+.accordion-body-modern textarea:focus,
+.accordion-body-modern select:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+}
+
+/* Темная тема (опционально) */
+@media (prefers-color-scheme: dark) {
+  .accordion-body-modern {
+    color: #fff;
+  }
+  
+  .accordion-header-modern button:not(.collapsed) {
+    background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%) !important;
+  }
+}
+
+/* Анимация при первом рендере */
+.accordion-wrapper {
+  animation: wrapperFadeIn 0.6s ease;
+}
+
+@keyframes wrapperFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Индикатор загрузки для аккордеона */
+.accordion-body-modern.loading {
+  position: relative;
+  min-height: 200px;
+}
+
+.accordion-body-modern.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #ffd700;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.keklol {
+  padding-right: 0 !important;
+    padding-left: 0 !important;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.hero-slider {
+  position: relative;
+  height: 500px;
+  overflow: hidden;
+  border-radius: 20px;
+  margin-bottom: 2rem;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.slide.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.slide-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slide-content {
+  text-align: center;
+  color: white;
+  transform: translateY(30px);
+  opacity: 0;
+  transition: all 0.5s ease 0.3s;
+}
+
+.slide.active .slide-content {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.slide-icon {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 1rem;
+  animation: bounce 2s infinite;
+}
+
+.slide-title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.slide-subtitle {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.slide-description {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: #ddd;
+}
+
+.slide-btn {
+  padding: 12px 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #1a1a2e;
+}
+
+.slide-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+}
+
+.slider-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 2;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background: #ffd700;
+  transform: scale(1.2);
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-slider {
+    height: 400px;
+  }
+  
+  .slide-title {
+    font-size: 1.8rem;
+  }
+  
+  .slide-subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .slide-icon {
+    font-size: 2.5rem;
+  }
+}
+
+/* Скелетон карточки */
+.skeleton-card {
+    pointer-events: none;
+    animation: fadeInScale 0.3s ease;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
     }
 }
 
-
-.Section {
-    background-color: #f1f1f1;
-}
-
-.btnAdd {
-    margin-left: 94px;
-}
-
-.btnAdd:active, .basket-section-scale:active {
-    transform: scale(0.9);
-}
-
-.textPrice {
+/* Изображение скелетона */
+.skeleton-image {
+    background: linear-gradient(135deg, #e0e0e0 0%, #c0c0c0 100%);
     position: relative;
-    color: black;
-    font-size: 24px;
-    top: 5px;
+    overflow: hidden;
 }
 
-.progress,
-.progress-stacked {
-    height: 4px !important;
-    // background-color: rgb(173, 173, 173) !important;
-}
-
-.progress-bar {
-    background: rgb(255, 0, 0) !important;
-}
-
-.rating {
-    color: yellow;
-}
-
-.foodsNone {
-    font-size: 30px;
-    color: rgb(197, 197, 197);
-    text-align: center;
-    margin: 25px auto;
-}
-
-.spinners {
+.skeleton-shimmer {
     position: absolute;
-    left: 47%;
-    top: 17%;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        transparent 100%
+    );
+    animation: shimmer 1.5s infinite;
 }
 
-.bottom-bar {
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+/* Заголовок скелетона */
+.skeleton-header {
+    margin-bottom: 1rem;
+}
+
+.skeleton-title {
+    height: 24px;
+    width: 80%;
+    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    animation: loading 1.5s infinite;
+}
+
+.skeleton-rating {
+    height: 18px;
+    width: 60%;
+    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+    border-radius: 8px;
+    animation: loading 1.5s infinite 0.1s;
+}
+
+/* Аккордеон скелетона */
+.skeleton-accordion {
+    margin-bottom: 1rem;
+}
+
+.skeleton-accordion-header {
+    height: 40px;
+    width: 100%;
+    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+    border-radius: 12px;
+    margin-bottom: 0.75rem;
+    animation: loading 1.5s infinite 0.2s;
+}
+
+.skeleton-description {
+    padding: 0.5rem 0;
+}
+
+.skeleton-line {
+    height: 12px;
+    width: 100%;
+    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    animation: loading 1.5s infinite 0.3s;
+}
+
+.skeleton-line.short {
+    width: 70%;
+    animation: loading 1.5s infinite 0.4s;
+}
+
+/* Футер скелетона */
+.skeleton-footer {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid #f0f0f0;
 }
 
-.Alert {
-    position: fixed;
-    z-index: 4;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 100%;
-    background-color: white !important;
-  }
-
-  .action {
-    position: absolute !important;
-    font-size: 20px !important;
+.skeleton-price {
+    height: 28px;
+    width: 70px;
+    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+    border-radius: 8px;
+    animation: loading 1.5s infinite 0.5s;
 }
 
-.badge-count {
-    position: absolute;
-    margin-top: 40px;
-    margin-left: 15.5em;
+.skeleton-button {
+    height: 38px;
+    width: 90px;
+    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+    border-radius: 50px;
+    animation: loading 1.5s infinite 0.6s;
 }
 
-.alert-image {
-    display: block;
-    margin: 10px auto;
-    width: 600px;
-    height: 600px;
+/* Анимация загрузки */
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
 }
 
+/* Вариант с пульсацией (альтернатива) */
+.skeleton-card.pulse .skeleton-title,
+.skeleton-card.pulse .skeleton-rating,
+.skeleton-card.pulse .skeleton-accordion-header,
+.skeleton-card.pulse .skeleton-line,
+.skeleton-card.pulse .skeleton-price,
+.skeleton-card.pulse .skeleton-button {
+    animation: pulse 1.5s ease-in-out infinite;
+}
 
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
 
+/* Светлая тема для скелетона */
+@media (prefers-color-scheme: dark) {
+    .skeleton-title,
+    .skeleton-rating,
+    .skeleton-accordion-header,
+    .skeleton-line,
+    .skeleton-price,
+    .skeleton-button {
+        background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+    }
+    
+    .skeleton-image {
+        background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+    }
+}
 
-
-  
-  .accordion-item:first-of-type .acord-name>button {
-    background-color: rgba(255, 166, 0, 0) !important;
-  }
-  
-  .acord-name>button:not(.collapsed) {
-    outline: none !important;
-    box-shadow: none !important;
-  }
-  
-  .accordion-item:first-of-type .acord-name>button {
-    outline: none !important;
-    box-shadow: none !important;
-  }
+.LinkButtonImg {
+  text-decoration: none !important;
+  color: black !important;
+}

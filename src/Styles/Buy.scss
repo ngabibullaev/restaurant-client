@@ -1,34 +1,388 @@
-.ground-buy {
-    background: rgb(255, 255, 255);
-    margin-top: 20px;
-    border-radius: 10px;
+.buy-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+  padding: 2rem 0;
 }
 
-.ButtonGroup-buy {
-    display: flex !important;
-    justify-content: center !important;
+.buy-container {
+  background: white;
+  border-radius: 30px;
+  padding: 2rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.5s ease;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+    margin: 0 1rem;
+  }
 }
 
-.left-buy {
-    border-radius: 20px 0px 0px 20px !important;
+// Заголовок
+.order-header {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  .header-icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    animation: bounce 2s ease-in-out infinite;
+  }
+
+  .order-title {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+  }
+
+  .order-subtitle {
+    color: #666;
+    font-size: 1rem;
+  }
 }
 
-.right-buy {
-    border-radius: 0px 20px 20px 0px !important;
+// Переключатель типа доставки
+.delivery-type-section {
+  margin-bottom: 2rem;
+
+  .type-switch {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+
+    .type-buttons {
+      display: flex;
+      gap: 0;
+      background: #f8f9fa;
+      padding: 0.25rem;
+      border-radius: 60px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+
+      .type-btn {
+        border-radius: 60px !important;
+        padding: 0.8rem 2rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+        border: none !important;
+
+        .btn-icon {
+          font-size: 1.2rem;
+        }
+
+        &.active {
+          background: linear-gradient(135deg, #1a1a2e, #16213e);
+          color: white;
+          transform: scale(0.98);
+        }
+
+        &:hover:not(.active) {
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+
+  .pickup-info {
+    .info-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: linear-gradient(135deg, #ffd70010, #ffed4e10);
+      padding: 1rem;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 215, 0, 0.2);
+
+      .info-icon {
+        font-size: 2rem;
+      }
+
+      .info-content {
+        .info-title {
+          font-weight: 600;
+          color: #1a1a2e;
+          margin: 0;
+        }
+
+        .info-address {
+          font-size: 1.1rem;
+          font-weight: 700;
+          margin: 0;
+          color: #ff4757;
+        }
+
+        .info-worktime {
+          font-size: 0.85rem;
+          color: #666;
+          margin: 0;
+        }
+      }
+    }
+  }
 }
 
-.ok-alert {
-    text-align: center !important;
-    position: fixed !important;
-    top: 300px !important;
-    z-index: 2 !important;
+// Секции формы
+.form-section {
+  margin-bottom: 2rem;
+  animation: fadeIn 0.5s ease;
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #f0f0f0;
+
+    .section-icon {
+      font-size: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin: 0;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+    position: relative;
+
+    &.optional {
+      opacity: 0.8;
+    }
+
+    .form-input {
+      border-radius: 16px;
+      border: 2px solid #e0e0e0;
+      transition: all 0.3s ease;
+      background: white;
+
+      &:focus {
+        border-color: #ffd700;
+        box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+      }
+
+      &.error {
+        border-color: #ff4757;
+      }
+
+      &.textarea {
+        resize: none;
+      }
+    }
+
+    .error-message {
+      color: #ff4757;
+      font-size: 0.8rem;
+      margin-top: 0.25rem;
+      margin-left: 0.5rem;
+    }
+  }
+
+  .address-row {
+    margin-bottom: 0;
+  }
 }
 
+// Итоговая сумма
+.order-summary {
+  margin-top: 2rem;
 
+  .summary-card {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    border-radius: 20px;
+    padding: 1.5rem;
+    color: white;
+    animation: slideUp 0.5s ease;
 
+    .summary-details {
+      margin-bottom: 1.5rem;
 
+      .summary-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+        font-size: 1rem;
 
+        &.total {
+          margin-top: 0.5rem;
+          padding-top: 1rem;
+          border-top: 1px solid rgba(255, 255, 255, 0.2);
+          font-size: 1.2rem;
+          font-weight: 700;
 
+          .total-price {
+            font-size: 1.5rem;
+            color: #ffd700;
+          }
+        }
+      }
+    }
 
+    .actions-buttons {
+      display: flex;
+      gap: 1rem;
 
+      @media (max-width: 576px) {
+        flex-direction: column;
+      }
 
+      .action-link {
+        flex: 1;
+        text-decoration: none;
+      }
+
+      .back-btn, .submit-btn {
+        width: 100%;
+        padding: 0.8rem;
+        border-radius: 60px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+
+        svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      .back-btn {
+        background: transparent;
+        color: white;
+        border-color: rgba(255, 255, 255, 0.3);
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.1);
+          transform: translateX(-5px);
+        }
+      }
+
+      .submit-btn {
+        background: linear-gradient(135deg, #ffd700, #ffed4e);
+        color: #1a1a2e;
+        border: none;
+
+        &:hover {
+          transform: scale(0.98);
+          box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+        }
+      }
+    }
+  }
+}
+
+// Alert уведомление
+.success-alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  min-width: 300px;
+  max-width: 500px;
+  border-radius: 20px !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.3s ease;
+
+  .alert-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .alert-icon {
+      font-size: 2.5rem;
+    }
+
+    .alert-text {
+      flex: 1;
+
+      .alert-heading {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+// Анимации
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+// Адаптивность
+@media (max-width: 768px) {
+  .type-btn {
+    padding: 0.6rem 1rem !important;
+    font-size: 0.9rem;
+  }
+
+  .section-title {
+    font-size: 1.1rem;
+  }
+
+  .summary-card .summary-details .summary-item.total .total-price {
+    font-size: 1.2rem;
+  }
+}
+
+// Стили для FloatingLabel (переопределение)
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+  color: #ffd700;
+}
+
+.form-floating > label {
+  color: #999;
+}

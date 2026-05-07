@@ -18,19 +18,20 @@ export const Buy: React.FC = () => {
 
   const [isName, setIsName] = useState('')
   const [number, setNumber] = useState('')
-  const [region, setRegion] = useState('(Не указан)')
-  const [home, setHome] = useState('(Не указан)')
-  const [house, setHouse] = useState('(Не указан)')
-  const [floor, setFloor] = useState('(Не указан)')
-  const [apartment, setApartment] = useState('(Не указан)')
-  const [comment, setComment] = useState('(Не указан)')
+  const [region, setRegion] = useState('')
+  const [home, setHome] = useState('')
+  const [house, setHouse] = useState('')
+  const [floor, setFloor] = useState('')
+  const [apartment, setApartment] = useState('')
+  const [comment, setComment] = useState('')
 
   const [nameError, setNameError] = useState('')
   const [numberError, setNumberError] = useState('')
   const [regionError, setRegionError] = useState('')
   const [homeError, setHomeError] = useState('')
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     let data = {};
 
     if (active === false) {
@@ -47,12 +48,12 @@ export const Buy: React.FC = () => {
       data = {
         isName,
         number,
-        region,
-        home,
-        house,
-        floor,
-        apartment,
-        comment,
+        region: region || '(Не указан)',
+        home: home || '(Не указан)',
+        house: house || '(Не указан)',
+        floor: floor || '(Не указан)',
+        apartment: apartment || '(Не указан)',
+        comment: comment || '(Не указан)',
         text,
         totalPrice,
         totalCount
@@ -70,11 +71,11 @@ export const Buy: React.FC = () => {
         setNumberError('Номер телефона должен содержать не менее 9 цифр')
         return;
       }
-      if (region === '(Не указан)') {
+      if (!region.trim()) {
         setRegionError('Заполните обязательное поле')
         return;
       }
-      if (home === '(Не указан)') {
+      if (!home.trim()) {
         setHomeError('Заполните обязательное поле')
         return;
       }
@@ -83,15 +84,14 @@ export const Buy: React.FC = () => {
         number,
         region,
         home,
-        house,
-        floor,
-        apartment,
-        comment,
+        house: house || '(Не указан)',
+        floor: floor || '(Не указан)',
+        apartment: apartment || '(Не указан)',
+        comment: comment || '(Не указан)',
         text,
         totalPrice,
         totalCount
       };
-      setShow(true)
     }
 
     axios.post('https://restaurant-server-ohyq.onrender.com/sendMessage', data)
@@ -99,6 +99,11 @@ export const Buy: React.FC = () => {
         if (response.data.success) {
           console.log('Сообщение отправлено');
           setShow(true)
+          // Очистка формы после успешной отправки
+          setTimeout(() => {
+            setShow(false);
+            window.location.href = '/';
+          }, 3000);
         } else {
           console.error(`Ошибка в отправке: ${response.data.error}`);
         }
@@ -109,163 +114,251 @@ export const Buy: React.FC = () => {
   }
 
   return (
-    <div>
-      <Container className="ground-buy">
+    <div className="buy-page">
+      <Container className="buy-container">
+        <div className="order-header">
+          <div className="header-icon">📝</div>
+          <h2 className="order-title">Оформление заказа</h2>
+          <p className="order-subtitle">Заполните форму, и мы свяжемся с вами</p>
+        </div>
+
         <form onSubmit={handleSubmit}>
-          <div>
-            <h2 className="text-center mb-4 pt-2">Оформление заказа</h2>
+          {/* Выбор типа получения */}
+          <div className="delivery-type-section">
             <Row>
-              <Col></Col>
-              <Col sm={6}>
-                <ButtonGroup className="ButtonGroup-buy" aria-label="Basic example">
-                  <Button onClick={() => setActive(false)} className="left-buy" variant={!active ? "dark" : "outline-dark"}>Самовывоз</Button>
-                  <Button onClick={() => setActive(true)} className="right-buy" variant={active ? "dark" : "outline-dark"}>Доставка</Button>
-                </ButtonGroup>
-                {!active && <p className="text-center mt-2"><img className="me-2" src="https://cdn2.iconfinder.com/data/icons/boxicons-solid-vol-1/24/bxs-building-house-24.png" alt="" />Адрес заведения <b>Центральная 1A</b></p>}
+              <Col lg={8} className="mx-auto">
+                <div className="type-switch">
+                  <ButtonGroup className="type-buttons">
+                    <Button 
+                      onClick={() => setActive(false)} 
+                      className={`type-btn pickup-btn ${!active ? 'active' : ''}`}
+                      variant={!active ? "dark" : "outline-dark"}
+                    >
+                      <span className="btn-icon">🏪</span>
+                      <span>Самовывоз</span>
+                    </Button>
+                    <Button 
+                      onClick={() => setActive(true)} 
+                      className={`type-btn delivery-btn ${active ? 'active' : ''}`}
+                      variant={active ? "dark" : "outline-dark"}
+                    >
+                      <span className="btn-icon">🚚</span>
+                      <span>Доставка</span>
+                    </Button>
+                  </ButtonGroup>
+                </div>
+                
+                {!active && (
+                  <div className="pickup-info">
+                    <div className="info-card">
+                      <span className="info-icon">📍</span>
+                      <div className="info-content">
+                        <p className="info-title">Адрес заведения</p>
+                        <p className="info-address">Центральная 1A</p>
+                        <p className="info-worktime">Ежедневно с 10:00 до 22:00</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </Col>
-              <Col></Col>
             </Row>
           </div>
 
-          <div>
-
-            {/* Клиент */}
+          {/* Информация о клиенте */}
+          <div className="form-section">
             <Row>
-              <Col></Col>
-              <Col sm={6}>
-                <h4 className="mt-4 text-secondary"><img className="me-1 mb-2" src="https://cdn2.iconfinder.com/data/icons/user-interface-169/32/about-24.png" alt="" />Клиент</h4>
-                <FloatingLabel
-                  controlId="floatingTextarea"
-                  label="Имя"
-                  className="mb-1"
-                  onChange={e => setIsName((e.target as HTMLInputElement).value)}
-                >
-                  <Form.Control as="input" placeholder="Введите имя" />
-                </FloatingLabel>
-                {nameError && <p className="text-danger">{nameError}</p>}
-                <FloatingLabel
-                  controlId="floatingTextarea"
-                  label="Номер телефона"
-                  className="mb-3"
-                  onChange={e => setNumber((e.target as HTMLInputElement).value)}
-                >
-                  <Form.Control as="input" placeholder="Введите номер телефона" />
-                </FloatingLabel>
-                {numberError && <p className="text-danger">{numberError}</p>}
-                <hr />
-              </Col>
-              <Col></Col>
-            </Row>
+              <Col lg={8} className="mx-auto">
+                <div className="section-header">
+                  <div className="section-icon">👤</div>
+                  <h3 className="section-title">Клиент</h3>
+                </div>
 
-
-            {/* Адрес */}
-            {active &&
-              <Row>
-                <Col></Col>
-                <Col sm={6}>
-                  <h4 className="text-secondary"><img className="me-1 mb-2" src="https://cdn1.iconfinder.com/data/icons/freeline/32/home_house_real_estate-24.png" alt="" />Адрес доставки</h4>
-                  <FloatingLabel
-                    controlId="floatingTextarea"
-                    label="Улица"
-                    className="mb-1"
-                    onChange={e => setRegion((e.target as HTMLInputElement).value)}
-                  >
-                    <Form.Control as="input" placeholder="Введите название улицы" />
+                <div className="form-group">
+                  <FloatingLabel label="Имя *">
+                    <Form.Control 
+                      type="text" 
+                      placeholder="Иван Иванов"
+                      onChange={e => setIsName(e.target.value)}
+                      className={`form-input ${nameError ? 'error' : ''}`}
+                    />
                   </FloatingLabel>
-                  {regionError && <p className="text-danger">{regionError}</p>}
-                  <FloatingLabel
-                    controlId="floatingTextarea"
-                    label="Дом"
-                    className="mb-1"
-                    onChange={e => setHome((e.target as HTMLInputElement).value)}
-                  >
-                    <Form.Control as="input" placeholder="Введите номер дома" />
-                  </FloatingLabel>
-                  {homeError && <p className="text-danger">{homeError}</p>}
-                  <FloatingLabel
-                    controlId="floatingTextarea"
-                    label="Подъезд"
-                    className="mb-1 text-secondary"
-                    onChange={e => setHouse((e.target as HTMLInputElement).value)}
-                  >
-                    <Form.Control as="input" placeholder="Введите номер подъезда" />
-                  </FloatingLabel>
+                  {nameError && <div className="error-message">{nameError}</div>}
+                </div>
 
-                  <FloatingLabel
-                    controlId="floatingTextarea"
-                    label="Этаж"
-                    className="mb-1 text-secondary"
-                    onChange={e => setFloor((e.target as HTMLInputElement).value)}
-                  >
-                    <Form.Control as="input" placeholder="Введите номер этажа" />
+                <div className="form-group">
+                  <FloatingLabel label="Номер телефона *">
+                    <Form.Control 
+                      type="tel" 
+                      placeholder="+7 999 999-99-99"
+                      onChange={e => setNumber(e.target.value)}
+                      className={`form-input ${numberError ? 'error' : ''}`}
+                    />
                   </FloatingLabel>
-
-                  <FloatingLabel
-                    controlId="floatingTextarea"
-                    label="Квартира"
-                    className="mb-3 text-secondary"
-                    onChange={e => setApartment((e.target as HTMLInputElement).value)}
-                  >
-                    <Form.Control as="input" placeholder="Введите номер квартиры" />
-                  </FloatingLabel>
-                  <hr />
-                </Col>
-                <Col></Col>
-              </Row>}
-
-            {/* Комментарий */}
-            <Row>
-              <Col></Col>
-              <Col sm={6}>
-                <h4 className="text-secondary"><img className="me-1" src="https://cdn0.iconfinder.com/data/icons/essentials-9/128/__Message-24.png" alt="" />Комментарий</h4>
-                <FloatingLabel controlId="floatingTextarea2" label="Комментарий">
-                  <Form.Control
-                    maxLength={200}
-                    as="textarea"
-                    placeholder="Введите комментарий"
-                    style={{ height: '100px' }}
-                    className="text-secondary"
-                    onChange={e => setComment((e.target as HTMLInputElement).value)}
-                  />
-                </FloatingLabel>
-
-                <div className="d-flex">
-                  <NavLink className="w-100 me-4" to="/basket"><Button className="w-100 mt-4 mb-4 basket-section-scale" variant="outline-dark">Назад ↵</Button></NavLink>
-                  <Button onClick={handleSubmit} className="w-100 mt-4 mb-4 basket-section-scale" variant="dark">Заказать</Button>
+                  {numberError && <div className="error-message">{numberError}</div>}
                 </div>
               </Col>
-              <Col></Col>
+            </Row>
+          </div>
+
+          {/* Адрес доставки */}
+          {active && (
+            <div className="form-section">
+              <Row>
+                <Col lg={8} className="mx-auto">
+                  <div className="section-header">
+                    <div className="section-icon">🏠</div>
+                    <h3 className="section-title">Адрес доставки</h3>
+                  </div>
+
+                  <Row className="address-row">
+                    <Col md={6}>
+                      <div className="form-group">
+                        <FloatingLabel label="Улица *">
+                          <Form.Control 
+                            type="text" 
+                            placeholder="Ленина"
+                            onChange={e => setRegion(e.target.value)}
+                            className={`form-input ${regionError ? 'error' : ''}`}
+                          />
+                        </FloatingLabel>
+                        {regionError && <div className="error-message">{regionError}</div>}
+                      </div>
+                    </Col>
+                    <Col md={6}>
+                      <div className="form-group">
+                        <FloatingLabel label="Дом *">
+                          <Form.Control 
+                            type="text" 
+                            placeholder="15"
+                            onChange={e => setHome(e.target.value)}
+                            className={`form-input ${homeError ? 'error' : ''}`}
+                          />
+                        </FloatingLabel>
+                        {homeError && <div className="error-message">{homeError}</div>}
+                      </div>
+                    </Col>
+                  </Row>
+
+                  <Row className="address-row">
+                    <Col md={6}>
+                      <div className="form-group optional">
+                        <FloatingLabel label="Подъезд">
+                          <Form.Control 
+                            type="text" 
+                            placeholder="2"
+                            onChange={e => setHouse(e.target.value)}
+                            className="form-input"
+                          />
+                        </FloatingLabel>
+                      </div>
+                    </Col>
+                    <Col md={6}>
+                      <div className="form-group optional">
+                        <FloatingLabel label="Этаж">
+                          <Form.Control 
+                            type="text" 
+                            placeholder="5"
+                            onChange={e => setFloor(e.target.value)}
+                            className="form-input"
+                          />
+                        </FloatingLabel>
+                      </div>
+                    </Col>
+                  </Row>
+
+                  <div className="form-group optional">
+                    <FloatingLabel label="Квартира">
+                      <Form.Control 
+                        type="text" 
+                        placeholder="42"
+                        onChange={e => setApartment(e.target.value)}
+                        className="form-input"
+                      />
+                    </FloatingLabel>
+                  </div>
+                </Col>
+              </Row>
+            </div>
+          )}
+
+          {/* Комментарий */}
+          <div className="form-section">
+            <Row>
+              <Col lg={8} className="mx-auto">
+                <div className="section-header">
+                  <div className="section-icon">💬</div>
+                  <h3 className="section-title">Комментарий</h3>
+                </div>
+
+                <div className="form-group">
+                  <FloatingLabel label="Дополнительная информация">
+                    <Form.Control 
+                      as="textarea"
+                      placeholder="Пожелания к заказу, особые условия..."
+                      style={{ height: '120px' }}
+                      onChange={e => setComment(e.target.value)}
+                      className="form-input textarea"
+                    />
+                  </FloatingLabel>
+                </div>
+              </Col>
+            </Row>
+          </div>
+
+          {/* Итого и кнопки */}
+          <div className="order-summary">
+            <Row>
+              <Col lg={8} className="mx-auto">
+                <div className="summary-card">
+                  <div className="summary-details">
+                    <div className="summary-item">
+                      <span>Товаров:</span>
+                      <strong>{totalCount} шт.</strong>
+                    </div>
+                    <div className="summary-item total">
+                      <span>Итого к оплате:</span>
+                      <strong className="total-price">{totalPrice} ₽</strong>
+                    </div>
+                  </div>
+                  
+                  <div className="actions-buttons">
+                    <NavLink to="/basket" className="action-link">
+                      <Button className="back-btn" variant="outline-dark">
+                        <svg viewBox="0 0 24 24" fill="none">
+                          <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" strokeWidth="2"/>
+                        </svg>
+                        Назад
+                      </Button>
+                    </NavLink>
+                    <Button onClick={handleSubmit} className="submit-btn" variant="dark">
+                      <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2"/>
+                      </svg>
+                      Заказать
+                    </Button>
+                  </div>
+                </div>
+              </Col>
             </Row>
           </div>
         </form>
 
-
-
-
-
-
-
-
-
-        {show === true &&
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-          <Alert
-            className="ok-alert"
-            variant="success"
-            onClose={() => setShow(false)}
-            dismissible
-          >
-            <Alert.Heading>Ожидайте пожалуйста!</Alert.Heading>
-            <p>
-              Менеджер позвонит вам в течении 5 минут для уточнении информации
-            </p>
-          </Alert>
-        </div>}
-
+        {/* Alert уведомление */}
+        <Alert
+          show={show}
+          variant="success"
+          onClose={() => setShow(false)}
+          dismissible
+          className="success-alert"
+        >
+          <div className="alert-content">
+            <div className="alert-icon">✅</div>
+            <div className="alert-text">
+              <Alert.Heading>Заказ успешно оформлен!</Alert.Heading>
+              <p>Менеджер свяжется с вами в течение 5 минут</p>
+            </div>
+          </div>
+        </Alert>
       </Container>
     </div>
   );

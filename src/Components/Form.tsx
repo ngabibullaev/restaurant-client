@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,12 +19,28 @@ const sort = [
 
 export const Form = () => {
   const dispatch = useDispatch();
+  const { sortOrder, search, sortId } = useSelector((state: RootState) => state.logic);
+  
+  // Состояние для активного ключа в dropdown
+  const [activeKey, setActiveKey] = useState<string | number>(0);
 
-  const { sortOrder, search } = useSelector((state: RootState) => state.logic);
+  // При монтировании компонента устанавливаем активный элемент
+  useEffect(() => {
+    // Находим индекс текущей сортировки
+    const currentIndex = sort.findIndex(s => s.sortProperty === sortId);
+    if (currentIndex !== -1) {
+      setActiveKey(currentIndex);
+    } else {
+      // Если не найдено, устанавливаем 0 и диспатчим значение по умолчанию
+      setActiveKey(0);
+      dispatch(setSortId(sort[0].sortProperty));
+    }
+  }, [dispatch, sortId]);
 
   const ClickSort = useCallback(
-    (s: sortType) => {
+    (s: sortType, index: number) => {
       dispatch(setSortId(s.sortProperty));
+      setActiveKey(index); // Обновляем активный ключ
     },
     [dispatch]
   );
@@ -35,69 +51,63 @@ export const Form = () => {
   }, [dispatch, sortOrder]);
 
   return (
-    <div className='Form'>
-      <div className='fform'>
-        <input
-          className='finput'
-          placeholder='Поиск'
-          type='text'
-          value={search}
-          onChange={(e) => dispatch(setSearch(e.target.value))}
-        />
-        <span className='finput-border'></span>
-        {!search ? (
-          <svg
-            className='fsearch'
-            height='28'
-            fill='gray'
-            id='Layer_1'
-            version='1.1'
-            viewBox='0 0 512 512'
-            width='28'
-            xmlns='http://www.w3.org/2000/svg'
-          >
-            <path d='M344.5,298c15-23.6,23.8-51.6,23.8-81.7c0-84.1-68.1-152.3-152.1-152.3C132.1,64,64,132.2,64,216.3  c0,84.1,68.1,152.3,152.1,152.3c30.5,0,58.9-9,82.7-24.4l6.9-4.8L414.3,448l33.7-34.3L339.5,305.1L344.5,298z M301.4,131.2  c22.7,22.7,35.2,52.9,35.2,85c0,32.1-12.5,62.3-35.2,85c-22.7,22.7-52.9,35.2-85,35.2c-32.1,0-62.3-12.5-85-35.2  c-22.7-22.7-35.2-52.9-35.2-85c0-32.1,12.5-62.3,35.2-85c22.7-22.7,52.9-35.2,85-35.2C248.5,96,278.7,108.5,301.4,131.2z' />
-          </svg>
-        ) : (
-          <svg
-            onClick={() => dispatch(setSearch(''))}
-            className='fclose' fill='gray'
-            height='28'
-            viewBox='0 0 48 48'
-            width='28'
-            xmlns='http://www.w3.org/2000/svg'
-          >
-            <path d='M38 12.83l-2.83-2.83-11.17 11.17-11.17-11.17-2.83 2.83 11.17 11.17-11.17 11.17 2.83 2.83 11.17-11.17 11.17 11.17 2.83-2.83-11.17-11.17z' />
-            <path d='M0 0h48v48h-48z' fill='none' />
-          </svg>
-        )}
+    <div className="search-form-wrapper">
+      <div className="search-container">
+        <div className="search-input-group">
+          <input
+            className="search-input-modern"
+            placeholder="Поиск блюд..."
+            type="text"
+            value={search}
+            onChange={(e) => dispatch(setSearch(e.target.value))}
+          />
+          <span className="search-border"></span>
+          {!search ? (
+            <svg className="search-icon" viewBox="0 0 24 24" fill="none">
+              <path d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+          ) : (
+            <svg
+              onClick={() => dispatch(setSearch(""))}
+              className="close-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+          )}
+        </div>
       </div>
-      <div>
+
+      <div className="sort-container">
         <Nav>
-          <NavDropdown title="☲">
+          <NavDropdown 
+            title={
+              <span className="sort-icon">
+                ☲
+              </span>
+            } 
+            className="sort-dropdown"
+          >
             {sort.map((s, i) => (
               <NavDropdown.Item
                 key={i}
-                className='fsort'
-                onClick={() => ClickSort(s)}
+                className={`sort-item ${activeKey === i ? 'active' : ''}`}
+                onClick={() => ClickSort(s, i)}
                 eventKey={i}
+                active={activeKey === i}
               >
                 {s.name}
+                {activeKey === i && <span className="active-check"> ✓</span>}
               </NavDropdown.Item>
             ))}
-            <hr className='line' />
-            {sortOrder === 'asc' ? (
-              <nav onClick={returnClick} className='returnAsc'>
-                По возрастанию ⭱
-              </nav>
-            ) : (
-              <nav onClick={returnClick} className='returnDesc'>
-                По убыванию ⭳
-              </nav>
-            )}
+            <hr className="divider" />
+            <nav onClick={returnClick} className="sort-order-btn">
+              {sortOrder === 'asc' ? 'Возрастание ↑' : 'Убывание ↓'}
+            </nav>
           </NavDropdown>
         </Nav>
       </div>
     </div>
-    );
+  );
 };

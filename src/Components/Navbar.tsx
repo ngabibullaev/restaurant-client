@@ -13,11 +13,18 @@ export const Navbar: React.FC = () => {
   const {categoryId} = useSelector((state: RootState) => state.logic)
 
   return (
-    <div>
-        <ButtonGroup size='sm' className="navigation w-100">
-            {categories.map((c: string, i: number) => (
-                <Button key={i} onClick={() => dispatch(setCategoryId(i))} className={categoryId === i ? 'nav-radius-active pt-2 pb-2' : 'nav-radius pt-2 pb-2'} variant="dark">{c}</Button>
-            ))}
+    <div className="category-nav-wrapper">
+      <ButtonGroup size="sm" className="category-button-group">
+        {categories.map((c, i) => (
+          <Button
+            key={i}
+            onClick={() => dispatch(setCategoryId(i))}
+            className={categoryId === i ? 'category-btn-active' : 'category-btn'}
+            variant="dark"
+          >
+            <span className="btn-content">{c}</span>
+          </Button>
+        ))}
       </ButtonGroup>
     </div>
   )

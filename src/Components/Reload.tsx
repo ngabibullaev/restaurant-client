@@ -1,28 +1,33 @@
 import Card from 'react-bootstrap/Card';
-import Placeholder from 'react-bootstrap/Placeholder';
-import Spinner from 'react-bootstrap/Spinner';
 
 export const Reload = () => {
     return (
-        <div>
-            <Card className='foods' style={{ height: "460px" }}>
-                <div style={{ height: "180px", backgroundColor: "#f0f0f0", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <Spinner className='spinners' animation="border" />
+        <Card className="product-card-modern skeleton-card">
+            <div className="card-image-wrapper skeleton-image">
+                <div className="skeleton-shimmer"></div>
+            </div>
+            
+            <Card.Body className="card-content">
+                <div className="product-header skeleton-header">
+                    <div className="skeleton-title"></div>
+                    <div className="skeleton-rating"></div>
                 </div>
-                <Card.Body>
-                    <Placeholder as={Card.Title} animation="glow">
-                        <Placeholder xs={6} />
-                    </Placeholder>
-                    <Placeholder as={Card.Text} animation="glow">
-                        <Placeholder xs={7} /> <Placeholder xs={4} /> <Placeholder xs={4} />{' '}
-                        <Placeholder xs={6} /> <Placeholder xs={8} />
-                    </Placeholder>
-                    <Placeholder as={Card.Title} animation="glow" style={{ paddingTop: "80px" }}>
-                        <Placeholder className='textPrice mb-3' xs={2} />
-                        <Placeholder.Button className='btnAdd' style={{marginLeft: "5.2em"}} variant="outline-dark" xs={6} />
-                    </Placeholder>
-                </Card.Body>
-            </Card>
-        </div>
-    )
+
+                <div className="product-accordion skeleton-accordion">
+                    <div className="skeleton-accordion-header"></div>
+                    <div className="skeleton-description">
+                        <div className="skeleton-line"></div>
+                        <div className="skeleton-line short"></div>
+                    </div>
+                </div>
+
+                <div className="product-footer skeleton-footer">
+                    <div className="price-section">
+                        <div className="skeleton-price"></div>
+                    </div>
+                    <div className="skeleton-button"></div>
+                </div>
+            </Card.Body>
+        </Card>
+    );
 };

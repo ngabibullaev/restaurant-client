@@ -22,83 +22,91 @@ export const BasketSection = () => {
     return <BasketEmpty />;
   }
 
-  return (
-    <div>
-        <div className="d-flex justify-content-between mx-2">
-          <h2 className="mt-2">
-            <img
-              className="mb-2"
-              src="https://cdn0.iconfinder.com/data/icons/smoothies-vector-icons-volume-4/48/204-36.png"
-              alt=""
-            />
-            Корзина
-          </h2>
+  console.log(items)
 
-          <div className="basket-button">
-          <svg
-            fill="#ffffff"
-            className="svg-basket"
-            version="1.1"
-            id="Capa_1"
-            xmlns="http://www.w3.org/2000/svg"
-            width="30px"
-            height="30px"
-            viewBox="0 0 900.301 900.301"
-            onClick={onClickClear}
-          >
-            <g>
-              <g>
-                <path
-                  d="M497.401,699.65h-47.4h-47.2c-0.899,0-87.6-0.4-155.4-15.2c-29.6-6.5-57.8-15.7-84-27l18.1,155.601
-			c1.4,11.699,11.3,20.6,23.1,20.6h245.4h245.6c11.7,0,21.601-9,23.101-20.6l18.1-155.601c-26.2,11.3-54.399,20.601-84,27
-			C585.001,699.25,498.201,699.65,497.401,699.65z"
-                />
-                <path
-                  d="M880.201,198.75l-35.4-0.1l0,0c-11,0-20,8.8-20,19.9c0,10.9-0.1,23.1-0.1,35.1h-42.5l6.3-54h-338.5h-338.3l6.3,54h-42.5
-			c-0.1-12-0.1-24.2-0.1-35.1c0-11-9-19.9-20-19.9l0,0l-35.4,0.1c-11.1,0-20.1,9.1-20,20.2c0.4,51.5,2.1,186.101,7.5,215.5
-			c15.8,85.4,78,144.2,152.5,179.7v0.1c29.7,14.101,61.3,24.7,92.8,31.601c64.2,14.2,147.8,14.8,150,14.8h47.2h47.4
-			c2.3,0,85.899-0.6,150.1-14.7c31.4-6.899,63.1-17.399,92.8-31.6v-0.101c74.5-35.5,136.7-94.3,152.5-179.699
-			c5.4-29.5,7.101-164,7.5-215.5C900.301,207.95,891.401,198.75,880.201,198.75z M824.001,334.15c-1,58.5-1.4,114.9-43.5,160.8
-			c-8.9,9.7-18.8,18.3-29.4,26.101v0.199c-21,15.301-44.899,27.101-69.5,35.7c-54.899,19.4-111.3,26.7-169.199,27.7h-62.4h-62.2
-			c-57.899-1-114.3-8.3-169.2-27.7c-24.6-8.7-48.4-20.399-69.5-35.7v-0.199c-10.6-7.7-20.5-16.4-29.4-26.101
-			c-42.1-45.899-42.6-102.3-43.5-160.8c0-3-0.1-6.5-0.1-9.5h50.2l18.7,147.4c20.7,20,48.2,36.399,82,48.399
-			c47,16.601,98.2,24.2,161.1,26.2h61.9h62.2c62.899-2,114.1-9.6,161.1-26.2c33.8-12,61.3-28.399,82-48.399l18.601-147.4h50.199
-			C824.101,327.65,824.001,331.15,824.001,334.15z"
-                />
-                <path
-                  d="M83.501,160.65h25.3h341.2h341.4h25.3c11,0,20.3-9.1,20.3-20.1v-53.9c0-11-9.2-20-20.3-20h-366.7h-366.5
-			c-11,0-20.5,9-20.5,20v53.9C63.001,151.55,72.501,160.65,83.501,160.65z"
-                />
-              </g>
-            </g>
-          </svg>
-              </div>
+  return (
+    <div className="basket-section">
+      <div className="basket-header">
+        <div className="header-content">
+          <div className="title-wrapper">
+            <div className="icon-wrapper">
+              <span className="cart-icon">🛒</span>
+            </div>
+            <h2 className="section-title">Корзина</h2>
+            <span className="items-count">{totalCount} товара</span>
+          </div>
           
+          <button className="clear-all-btn" onClick={onClickClear}>
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 7H20M10 11V16M14 11V16M5 7L6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19L19 7M9 7V4C9 3.4 9.4 3 10 3H14C14.6 3 15 3.4 15 4V7" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+            <span>Очистить корзину</span>
+          </button>
         </div>
+      </div>
+
+      <div className="basket-items">
         {items.map((item) => (
-        <div key={item.id} style={{ background: "white", margin: "10px 0", padding: "5px 0", border: "1px solid #e4e4e4"}}>
-          <BaketCards {...item} />
-        </div>
+          <div key={item.id} className="basket-item-wrapper">
+            <BaketCards {...item} />
+          </div>
         ))}
-        <div className="d-flex justify-content-between mb-2 mx-2">
-          <h3>{totalCount} шт.</h3>
-          <h3>{totalPrice}₽</h3>
+      </div>
+
+      <div className="basket-summary">
+        <div className="summary-card">
+          <div className="summary-header">
+            <h3>Итого заказа</h3>
+            <div className="summary-details">
+              <div className="summary-item">
+                <span className="summary-label">Товаров:</span>
+                <span className="summary-value">{totalCount} шт.</span>
+              </div>
+              <div className="summary-item total">
+                <span className="summary-label">Сумма:</span>
+                <span className="summary-value total-price">{totalPrice} ₽</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="summary-actions">
+            <Link to="/" className="action-link back-link">
+              <Button className="action-btn back-btn" variant="outline-dark">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+                Вернуться назад
+              </Button>
+            </Link>
+            
+            <Link to="/buy" className="action-link checkout-link">
+              <Button className="action-btn checkout-btn" variant="warning">
+                <span>Оформить заказ</span>
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+              </Button>
+            </Link>
+          </div>
+
+          <div className="delivery-info">
+            <div className="info-item">
+              <span className="info-icon">🚚</span>
+              <div className="info-text">
+                <p>Бесплатная доставка</p>
+                <small>При заказе от 1000 ₽</small>
+              </div>
+            </div>
+            <div className="info-item">
+              <span className="info-icon">⏱️</span>
+              <div className="info-text">
+                <p>Быстрая доставка</p>
+                <small>30-45 минут</small>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="d-flex justify-content-between mx-2">
-          <Link to="/">
-            <Button
-              className="mb-2 basket-section-scale"
-              variant="outline-dark"
-            >
-              ❮ Вернуться назад
-            </Button>{" "}
-          </Link>
-          <Link to="/buy">
-            <Button className="mb-2 basket-section-scale" variant="warning">
-              Заказать
-            </Button>{" "}
-          </Link>
-        </div>
+      </div>
     </div>
   );
 };

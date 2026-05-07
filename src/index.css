@@ -1,17 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap");
 
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: 'Roboto', sans-serif !important;
+  font-family: "Roboto", sans-serif !important;
   background-color: #f1f1f1 !important;
 }
 
 .accordion-body {
   padding: 0 !important;
 }
-.open-menu>button.collapsed {
+.open-menu > button.collapsed {
   background-color: orange !important;
   border: none !important;
   border-bottom-right-radius: 0 !important;
@@ -21,7 +21,7 @@ body {
   box-shadow: none !important;
 }
 
-.open-menu>button {
+.open-menu > button {
   background-color: orange !important;
   border: none !important;
   border-top-right-radius: 0 !important;
@@ -32,15 +32,13 @@ body {
   box-shadow: none !important;
 }
 
-.open-menu>button {
+.open-menu > button {
   color: black !important;
   font-weight: 500;
   font-size: 20px !important;
 }
 
-
-
-.open-otziv>button.collapsed {
+.open-otziv > button.collapsed {
   background-color: white !important;
   border: none !important;
   border-bottom-right-radius: 0 !important;
@@ -50,7 +48,7 @@ body {
   box-shadow: none !important;
 }
 
-.open-otziv>button {
+.open-otziv > button {
   background-color: white !important;
   border: none !important;
   border-top-right-radius: 0 !important;
@@ -60,7 +58,7 @@ body {
   box-shadow: none !important;
 }
 
-.open-otziv>button {
+.open-otziv > button {
   color: black !important;
   font-weight: 500;
   font-size: 20px !important;
@@ -90,8 +88,121 @@ body {
   }
 } */
 
-
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family:
+    source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+/* Глобальные стили и переопределения Bootstrap */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  background: #f5f7fa;
+}
+
+/* Кастомный скроллбар */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+}
+
+/* Анимации */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .search-form-wrapper {
+    margin: 1rem 0;
+    border-radius: 0px;
+  }
+  .review-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .alert-image-modern {
+    height: 200px;
+  }
+
+  .alert-price {
+    font-size: 24px;
+  }
+}
+
+/* Исправление z-index для сортировки */
+.sort-container {
+  position: relative;
+  z-index: 1000 !important;
+}
+
+.sort-dropdown .dropdown-menu {
+  z-index: 1050 !important;
+  position: absolute !important;
+  inset: 0px auto auto 0px !important;
+  margin: 0 !important;
+  transform: translate(-80px, 60px) !important;
+}
+
+/* Убедимся, что карточки имеют меньший z-index */
+.product-card-modern {
+  position: relative;
+  z-index: 1;
+}
+
+/* Для всех карточек в сетке */
+.row .col {
+  position: relative;
+  z-index: 1;
+}
+
+/* Обертка секции должна иметь правильный контекст наложения */
+.product-section {
+  position: relative;
+  z-index: 1;
+}
+
+/* Для формы поиска */
+.search-form-wrapper {
+  position: relative;
+  z-index: 100;
 }

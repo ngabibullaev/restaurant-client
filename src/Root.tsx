@@ -7,6 +7,7 @@ import { Buy } from "./Buy/Buy";
 import { TwoPizzas } from "./Buy/TwoPizzas";
 import { Footer } from "./Components/Footer";
 import ScrollToTopButton from "./Components/ScrollToTopButton";
+import { FullPizza } from "./Components/FullPizza";
 
 export const Root = () => {
 
@@ -15,6 +16,7 @@ export const Root = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/pizza/:urlId" element={<FullPizza />} />
         <Route path="/basket" element={<Baket />} />
         <Route path="/buy" element={<Buy />} />
         <Route path="/two" element={<TwoPizzas />} />

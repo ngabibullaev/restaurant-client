@@ -3,12 +3,11 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import { Alert, Button, Container } from "react-bootstrap";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
-import moment from "moment";
 
 type ReviewItem = {
   name: string;
   ratingIndex: number;
-  date: Date;
+  createdAt: string;
 };
 
 const PAGE_SIZE = 10;
@@ -77,13 +76,14 @@ export const Review: React.FC = () => {
   };
 
   const handleSubmit = () => {
-    const review: ReviewItem = { name, ratingIndex, date: new Date() };
+    const review = { name, ratingIndex };
 
     axios
-      .post("https://restaurant-server-ohyq.onrender.com", review)
+      .post("https://restaurant-server-ohyq.onrender.com/", review)
       .then((response) => {
         console.log(response);
-        setReviews((prev) => [...prev, review]);
+        const savedReview = response.data.data; // или response.data, зависит от вашего сервера
+        setReviews((prev) => [...prev, savedReview]);
       })
       .catch((error) => console.error(error));
 
@@ -91,83 +91,90 @@ export const Review: React.FC = () => {
     setRatingIndex(-1);
   };
 
-  return (
-    <div>
-      <Container className="mt-2">
-        <h2 className="text-center pt-2 pb-2">Оставить отзыв</h2>
-        <div className="d-flex justify-content-center"></div>
+  console.log(reviews)
 
-        <FloatingLabel controlId="floatingTextarea2" label="Комментарий">
-          <Form.Control
-            as="textarea"
-            placeholder="Leave a comment here"
-            maxLength={200}
-            className="otziv-area"
-            onChange={handleNameChange}
-            value={name}
-          />
-        </FloatingLabel>
-        <div className="d-flex justify-content-between">
-          <div className="d-flex">
-            {rating.map((r, i) => (
-              <nav
-                key={i}
-                onClick={() => setRatingIndex(i)}
-                className={
-                  ratingIndex >= i ? "reviewRest text-warning" : "reviewRest"
-                }
-              >
-                {r}
-              </nav>
-            ))}
+  return (
+    <div className="reviews-section">
+      <Container>
+        <h2 className="reviews-title">Оставить отзыв</h2>
+        
+        <div className="review-form">
+          <FloatingLabel controlId="floatingTextarea2" label="Ваш комментарий">
+            <Form.Control
+              as="textarea"
+              placeholder="Оставьте ваш отзыв здесь..."
+              maxLength={200}
+              className="review-textarea"
+              onChange={handleNameChange}
+              value={name}
+            />
+          </FloatingLabel>
+          
+          <div className="form-actions">
+            <div className="rating-stars">
+              {rating.map((r, i) => (
+                <span
+                  key={i}
+                  onClick={() => setRatingIndex(i)}
+                  className={ratingIndex >= i ? 'star active' : 'star'}
+                >
+                  {r}
+                </span>
+              ))}
+            </div>
+            
+            {!name.trim() || ratingIndex === -1 ? (
+              <Button variant="secondary" className="submit-btn-inactive">
+                Добавить
+              </Button>
+            ) : (
+              <Button variant="warning" onClick={handleSubmit} className="submit-btn-active">
+                Отправить отзыв
+              </Button>
+            )}
           </div>
-          {!name.trim() || ratingIndex === -1 ? (
-            <Button variant="secondary mt-1">Добавить</Button>
-          ) : (
-            <Button variant="warning mt-1" onClick={handleSubmit}>
-              Добавить
-            </Button>
-          )}
         </div>
-        <hr />
-        <h2 className="text-center text-dark pt-2 pb-2">Отзывы</h2>
-        {reviews.map((item: ReviewItem, index: number) => (
-          <div key={index}>
-            <Alert variant="light">
-              <div className="d-flex justify-content-between">
-                <h5 className="text-dark">
+        
+        <hr className="divider-full" />
+        
+        <h2 className="reviews-title">Отзывы клиентов</h2>
+        
+        <div className="reviews-list">
+          {reviews.map((item, index) => (
+            <div key={index} className="review-card">
+              <div className="review-header">
+                <h5 className="review-date">
                   <img
-                    className="pb-1"
+                    className="avatar-icon"
                     src="https://cdn2.iconfinder.com/data/icons/school-set-5/512/6-20.png"
-                    alt=""
-                  />{" "}
-                  {moment(item.date).format("DD/MM/YYYY")}
+                    alt="calendar"
+                  />
+                  {new Date(item.createdAt).toLocaleString('ru-RU')}
                 </h5>
-                <div className="d-flex">
+                <div className="review-stars">
                   {rating.map((r, i) => (
-                    <h4
-                      key={i}
-                      className={i <= item.ratingIndex ? "text-warning" : ""}
-                    >
+                    <span key={i} className={i <= item.ratingIndex ? 'star small active' : 'star small'}>
                       {r}
-                    </h4>
+                    </span>
                   ))}
                 </div>
               </div>
-              <p style={{ wordWrap: "break-word" }}>
+              <p className="review-text">
                 <img
-                  className="me-2 mb-2"
+                  className="user-icon"
                   src="https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_user-24.png"
-                  alt=""
+                  alt="user"
                 />
                 {item.name}
               </p>
-            </Alert>
-          </div>
-        ))}
-        <div ref={loader}></div>
-        {!hasMore && (
-          <p className="text-center text-secondary">Больше нет отзывов</p>
+            </div>
+          ))}
+        </div>
+        
+        <div ref={loader} className="loader-more"></div>
+        
+        {!hasMore && reviews.length > 0 && (
+          <p className="end-message">✨ Больше нет отзывов ✨</p>
         )}
       </Container>
     </div>
