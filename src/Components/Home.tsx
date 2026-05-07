@@ -7,8 +7,11 @@ import { Section } from "./Section";
 import { Accordion, Container } from "react-bootstrap";
 import { Review } from "./Review";
 import { Slider } from "./Slider";
+import { useEffect } from "react";
 
 export const Home = () => {
+
+  useEffect(() => {window.scroll(0, 0)}, [])
 
   return (
     <Container fluid="lg" className="keklol">
@@ -27,7 +30,7 @@ export const Home = () => {
             </Accordion.Body>
           </Accordion.Item>
 
-          <Accordion.Item className="accordion-reviews-item" eventKey="1">
+          <Accordion.Item onClick={() => window.scroll(0, 500)} className="accordion-reviews-item" eventKey="1">
             <Accordion.Header className="accordion-header-modern">
               <span className="header-icon">⭐</span>
               Отзывы наших клиентов

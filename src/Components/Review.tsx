@@ -116,6 +116,7 @@ export const Review: React.FC = () => {
                 <span
                   key={i}
                   onClick={() => setRatingIndex(i)}
+                  style={{marginTop: "-15px"}}
                   className={ratingIndex >= i ? 'star active' : 'star'}
                 >
                   {r}

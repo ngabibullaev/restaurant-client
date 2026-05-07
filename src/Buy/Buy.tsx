@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, ButtonGroup, Col, Container, FloatingLabel, Form, Row, Alert } from 'react-bootstrap';
 import "../Styles/Buy.scss";
 import { NavLink } from "react-router-dom";
@@ -29,6 +29,8 @@ export const Buy: React.FC = () => {
   const [numberError, setNumberError] = useState('')
   const [regionError, setRegionError] = useState('')
   const [homeError, setHomeError] = useState('')
+
+  useEffect(() => {window.scroll(0, 0)}, [])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
