@@ -5,7 +5,6 @@ import "../Styles/ScrollToTopButton.scss";
 const ScrollToTopButton = () => {
   const [isVisible, setIsVisible] = useState(false);
 
-  // Проверяем положение скролла окна браузера, чтобы определить видимость кнопки
   const handleScroll = () => {
     const top = window.pageYOffset || document.documentElement.scrollTop;
     setIsVisible(top > 500);

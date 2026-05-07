@@ -99,7 +99,6 @@ export const Buy: React.FC = () => {
         if (response.data.success) {
           console.log('Сообщение отправлено');
           setShow(true)
-          // Очистка формы после успешной отправки
           setTimeout(() => {
             setShow(false);
             window.location.href = '/';
@@ -200,7 +199,6 @@ export const Buy: React.FC = () => {
             </Row>
           </div>
 
-          {/* Адрес доставки */}
           {active && (
             <div className="form-section">
               <Row>
@@ -281,7 +279,6 @@ export const Buy: React.FC = () => {
             </div>
           )}
 
-          {/* Комментарий */}
           <div className="form-section">
             <Row>
               <Col lg={8} className="mx-auto">
@@ -305,7 +302,6 @@ export const Buy: React.FC = () => {
             </Row>
           </div>
 
-          {/* Итого и кнопки */}
           <div className="order-summary">
             <Row>
               <Col lg={8} className="mx-auto">
@@ -343,7 +339,6 @@ export const Buy: React.FC = () => {
           </div>
         </form>
 
-        {/* Alert уведомление */}
         <Alert
           show={show}
           variant="success"

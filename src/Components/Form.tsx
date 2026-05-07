@@ -21,17 +21,13 @@ export const Form = () => {
   const dispatch = useDispatch();
   const { sortOrder, search, sortId } = useSelector((state: RootState) => state.logic);
   
-  // Состояние для активного ключа в dropdown
   const [activeKey, setActiveKey] = useState<string | number>(0);
 
-  // При монтировании компонента устанавливаем активный элемент
   useEffect(() => {
-    // Находим индекс текущей сортировки
     const currentIndex = sort.findIndex(s => s.sortProperty === sortId);
     if (currentIndex !== -1) {
       setActiveKey(currentIndex);
     } else {
-      // Если не найдено, устанавливаем 0 и диспатчим значение по умолчанию
       setActiveKey(0);
       dispatch(setSortId(sort[0].sortProperty));
     }
@@ -40,7 +36,7 @@ export const Form = () => {
   const ClickSort = useCallback(
     (s: sortType, index: number) => {
       dispatch(setSortId(s.sortProperty));
-      setActiveKey(index); // Обновляем активный ключ
+      setActiveKey(index);
     },
     [dispatch]
   );
