@@ -74,6 +74,7 @@ export const TwoPizzas: React.FC = () => {
   };
 
   const handleClick = (pizza: Pizza, i: number) => {
+    window.scroll(0, 0)
     setNum(!num);
     setIndexUrl(i);
     if (num === false) {
