@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { Alert, Button, Container } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 
@@ -82,7 +82,7 @@ export const Review: React.FC = () => {
       .post("https://restaurant-server-ohyq.onrender.com/", review)
       .then((response) => {
         console.log(response);
-        const savedReview = response.data.data; // или response.data, зависит от вашего сервера
+        const savedReview = response.data.data;
         setReviews((prev) => [...prev, savedReview]);
       })
       .catch((error) => console.error(error));

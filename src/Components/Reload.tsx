@@ -2,32 +2,33 @@ import Card from 'react-bootstrap/Card';
 
 export const Reload = () => {
     return (
-        <Card className="product-card-modern skeleton-card">
-            <div className="card-image-wrapper skeleton-image">
-                <div className="skeleton-shimmer"></div>
+         <Card className="product-card-horizontal skeleton-card">
+            <div className="card-horizontal-wrapper">
+                {/* Левая часть - изображение */}
+                <div className="card-image-section">
+                    <div className="card-image-wrapper-horizontal skeleton-image">
+                        <div className="skeleton-shimmer"></div>
+                    </div>
+                </div>
+
+                {/* Правая часть - информация */}
+                <div className="card-info-section">
+                    <div className="product-header-horizontal">
+                        <div className="skeleton-title-horizontal"></div>
+                        <div className="skeleton-rating-horizontal"></div>
+                    </div>
+
+                    <div className="skeleton-description-horizontal">
+                        <div className="skeleton-line-horizontal"></div>
+                        <div className="skeleton-line-horizontal short"></div>
+                    </div>
+
+                    <div className="product-footer-horizontal">
+                        <div className="skeleton-price-horizontal"></div>
+                        <div className="skeleton-button-horizontal"></div>
+                    </div>
+                </div>
             </div>
-            
-            <Card.Body className="card-content">
-                <div className="product-header skeleton-header">
-                    <div className="skeleton-title"></div>
-                    <div className="skeleton-rating"></div>
-                </div>
-
-                <div className="product-accordion skeleton-accordion">
-                    <div className="skeleton-accordion-header"></div>
-                    <div className="skeleton-description">
-                        <div className="skeleton-line"></div>
-                        <div className="skeleton-line short"></div>
-                    </div>
-                </div>
-
-                <div className="product-footer skeleton-footer">
-                    <div className="price-section">
-                        <div className="skeleton-price"></div>
-                    </div>
-                    <div className="skeleton-button"></div>
-                </div>
-            </Card.Body>
         </Card>
     );
 };

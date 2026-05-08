@@ -92,13 +92,13 @@ export const Section: React.FC = () => {
         <Row className="g-4">
           {isLoading ? (
             [...new Array(8)].map((_, index) => (
-              <Col key={index} xs={12} sm={6} md={4} lg={3}>
+              <Col key={index} xs={12} sm={12} md={6} lg={6}>
                 <Reload />
               </Col>
             ))
           ) : items.length > 0 ? (
             items.map((item, index) => (
-              <Col key={index} xs={12} sm={6} md={4} lg={3}>
+              <Col key={index} xs={12} sm={12} md={6} lg={6}>
                 <Carton
                   id={item.id}
                   name={item.name}

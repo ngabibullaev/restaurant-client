@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Image, Button, Badge } from "react-bootstrap";
+import { Container, Image, Button, Badge } from "react-bootstrap";
 import "../Styles/TwoPizzas.scss";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -90,6 +90,7 @@ export const TwoPizzas: React.FC = () => {
     }
   };
 
+
   const isPizzasSelected = left !== "https://cdn1.iconfinder.com/data/icons/party-111/32/pizza_food_restaurant_menu-256.png" &&
     right !== "https://cdn1.iconfinder.com/data/icons/party-111/32/pizza_food_restaurant_menu-256.png";
 
@@ -161,7 +162,9 @@ export const TwoPizzas: React.FC = () => {
             <div
               key={i}
               className={`pizza-item ${indexUrl === i ? 'selected' : ''}`}
-              onClick={() => handleClick(pizza, i)}
+              onClick={() => {
+                indexUrl !== i && handleClick(pizza, i)
+              }}
             >
               <div className="pizza-item-image">
                 <Image src={pizza.imageUrl} thumbnail />
